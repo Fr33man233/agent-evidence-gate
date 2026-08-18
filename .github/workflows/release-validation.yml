@@ -12,13 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          ref: v0.1.1
+          ref: v0.1.2
+      - name: Prepare synthetic evidence binding
+        env:
+          AEG_INPUT_DIR: ${{ runner.temp }}/aeg-validation
+        run: node scripts/prepare-release-validation.mjs "$AEG_INPUT_DIR"
       - name: Run AEG against committed synthetic evidence
         uses: ./
         with:
-          manifest: examples/synthetic-demo/agent-task.yml
-          trace: examples/synthetic-demo/agent-trace.jsonl
-          evidence: examples/synthetic-demo/evidence.json
+          manifest: ${{ runner.temp }}/aeg-validation/agent-task.yml
+          trace: ${{ runner.temp }}/aeg-validation/agent-trace.jsonl
+          evidence: ${{ runner.temp }}/aeg-validation/evidence.json
           repository: ${{ github.workspace }}
           json: gate-report.json
           markdown: gate-report.md
