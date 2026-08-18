@@ -2,7 +2,7 @@
 
 ## Intended validation
 
-The public workflow `.github/workflows/release-validation.yml` is a manual-only, read-only synthetic check. It checks out the immutable `v0.1.1` tag, invokes the bundled local Action against committed synthetic evidence, and uploads only the bounded JSON/Markdown reports.
+The public workflow `.github/workflows/release-validation.yml` is a manual-only, read-only synthetic check. It checks out the immutable `v0.1.2` tag, prepares temporary synthetic evidence from read-only Git metadata, invokes the bundled local Action, and uploads only the bounded JSON/Markdown reports.
 
 ## Security boundary
 
