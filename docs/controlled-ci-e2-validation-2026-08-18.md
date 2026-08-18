@@ -12,6 +12,12 @@ The public workflow `.github/workflows/release-validation.yml` is a manual-only,
 - No `pull_request_target`, secrets, candidate commands, packages, tests, scripts, or untrusted pull-request content are executed.
 - The report may establish only `E2-candidate` under the synthetic trust context; it is not production CI attestation.
 
-## Validation status
+## Validation result
 
-The workflow is prepared and statically tested. A manual run must be triggered after the v0.1.1 tag is published. The final record must include the GitHub Actions run URL, job conclusion, report artifact names, exit classification, and any warning or failure reason. Until that run is independently reviewed, real CI/E2 remains `unverified`.
+- Run: [32141322549](https://github.com/Fr33man233/agent-evidence-gate/actions/runs/32141322549)
+- Head: `979b1114e28b757ebda31aa5cceca3f2133e204c`
+- Job: `verify-synthetic`, success; all five workflow steps succeeded.
+- Reports: `gate-report.json` and `gate-report.md` uploaded as `aeg-release-validation-report`.
+- Gate result: `pass`, policy `pass`, assurance `E2-candidate`, reason codes: none.
+
+This is a successful controlled synthetic validation, not production attestation. Producer identity and real maintainer-controlled CI/E2 remain `unverified`.
