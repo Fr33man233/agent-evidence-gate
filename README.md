@@ -46,6 +46,7 @@ Read [docs/threat-model.md](docs/threat-model.md) before using AEG as a required
 - [Contributing guide](CONTRIBUTING.md) for deterministic tests, review expectations, and safe change boundaries.
 - [Release validation record](docs/release-validation-2026-08-18.md) for clean-checkout verification.
 - [Controlled CI/E2 validation](docs/controlled-ci-e2-validation-2026-08-18.md) for the read-only synthetic workflow and its `E2-candidate` limitation.
+- [Security and privacy review](docs/security-privacy-review-2026-08-18.md) for the release gate and residual risks.
 
 ## License
 
