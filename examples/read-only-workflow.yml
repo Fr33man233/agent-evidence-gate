@@ -1,0 +1,21 @@
+name: AEG read-only gate
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      # Replace OWNER/REPO and pin to an immutable reviewed release commit.
+      # The action reads evidence and Git metadata; it does not execute the PR.
+      - uses: OWNER/REPO@v0.1.0
+        with:
+          manifest: examples/synthetic-demo/agent-task.yml
+          trace: examples/synthetic-demo/agent-trace.jsonl
+          evidence: examples/synthetic-demo/evidence.json
+          repository: ${{ github.workspace }}

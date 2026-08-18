@@ -1,0 +1,16 @@
+schema_version: aeg-task/v1
+task_id: synthetic-preflight
+profile: pr
+base_commit: 0123456789abcdef0123456789abcdef01234567
+allowed_paths:
+  - src/app.ts
+denied_paths:
+  - .github/workflows
+sensitive_paths:
+  - .env
+required_checks:
+  - id: unit
+    kind: test
+    argv:
+      - node
+      - --test

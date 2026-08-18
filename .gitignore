@@ -1,0 +1,10 @@
+node_modules/
+.pnpm-store/
+dist/*.json
+dist/*.md
+dist/types/
+dist/*.mjs
+research/competitor-runs/
+spike/
+产品立项书.docx
+coverage/

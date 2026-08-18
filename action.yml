@@ -1,0 +1,26 @@
+name: Agent Evidence Gate
+description: Read-only deterministic verification of agent delivery evidence.
+inputs:
+  manifest:
+    description: Path to agent-task.yml in the checked-out workspace.
+    required: true
+  trace:
+    description: Path to agent-trace.jsonl in the checked-out workspace.
+    required: true
+  evidence:
+    description: Path to an OMK v3 receipt or maintainer-CI envelope JSON.
+    required: true
+  repository:
+    description: Repository workspace used for read-only Git state binding; defaults to GITHUB_WORKSPACE.
+    required: false
+  json:
+    description: Output path for the canonical JSON report.
+    required: false
+    default: gate-report.json
+  markdown:
+    description: Output path for the Markdown report.
+    required: false
+    default: gate-report.md
+runs:
+  using: node20
+  main: dist/action.cjs

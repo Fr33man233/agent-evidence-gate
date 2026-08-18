@@ -1,0 +1,12 @@
+{
+  "source": { "kind": "maintainer_ci" },
+  "subject": { "repository_id": "synthetic/repo", "head_sha": "abcdef0123456789abcdef0123456789abcdef01" },
+  "check": { "check_id": "unit", "termination": "completed", "exit_code": 0 },
+  "producer": { "id": "synthetic-ci", "run_id": "run-1", "workflow_ref": ".github/workflows/aeg.yml@refs/heads/main" },
+  "trust_context": {
+    "repository_id": "synthetic/repo",
+    "current_head_sha": "abcdef0123456789abcdef0123456789abcdef01",
+    "workflow_ref": ".github/workflows/aeg.yml@refs/heads/main",
+    "trusted_workflows": [".github/workflows/aeg.yml@refs/heads/main"]
+  }
+}

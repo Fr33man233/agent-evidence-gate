@@ -1,0 +1,2 @@
+{"schema_version":"aeg-trace/v1","run_id":"synthetic-run","event_id":"event-001","sequence":1,"timestamp":"2026-08-17T00:00:00.000Z","event_type":"run_started","producer":{"id":"synthetic","kind":"fixture"},"data":{}}
+{"schema_version":"aeg-trace/v1","run_id":"synthetic-run","event_id":"event-002","sequence":2,"timestamp":"2026-08-17T00:00:01.000Z","event_type":"run_finished","producer":{"id":"synthetic","kind":"fixture"},"data":{"termination":"completed","exit_code":0}}

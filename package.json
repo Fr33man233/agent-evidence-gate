@@ -1,0 +1,24 @@
+{
+  "name": "agent-evidence-gate",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Deterministic, privacy-first agent delivery evidence gate.",
+  "type": "module",
+  "engines": {
+    "node": ">=20 <25"
+  },
+  "scripts": {
+    "build": "esbuild src/cli.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/aeg.cjs && esbuild src/action.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/action.cjs",
+    "test": "node --import tsx --test tests/**/*.test.ts",
+    "verify": "node dist/aeg.cjs verify"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.21",
+    "esbuild": "0.25.9",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "yaml": "2.8.1"
+  }
+}

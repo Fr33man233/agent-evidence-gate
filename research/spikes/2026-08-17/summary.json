@@ -1,0 +1,1 @@
+{"contract":"AEG-SPK-INT-001","fail_closed_count":12,"fixture_count":16,"model_calls":0,"network_calls":0,"new_runtime_dependencies":0,"note":"Synthetic offline probe; no production authorization.","pass_count":4,"source_kinds":["maintainer_ci","mixed_or_input","omk_v3"],"verified_count":16}

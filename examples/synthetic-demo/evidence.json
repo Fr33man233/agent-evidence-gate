@@ -1,0 +1,13 @@
+{
+  "source": { "kind": "maintainer_ci" },
+  "subject": { "repository_id": "synthetic-repo", "head_sha": "0000000000000000000000000000000000000000" },
+  "check": { "check_id": "unit", "termination": "completed", "exit_code": 0 },
+  "producer": { "id": "synthetic-ci", "run_id": "synthetic-run" },
+  "trust_context": {
+    "repository_id": "synthetic-repo",
+    "current_head_sha": "0000000000000000000000000000000000000000",
+    "workflow_ref": "synthetic@main",
+    "trusted_workflows": ["synthetic@main"]
+  }
+}
+

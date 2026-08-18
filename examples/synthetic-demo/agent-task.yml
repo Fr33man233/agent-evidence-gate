@@ -1,0 +1,29 @@
+schema_version: aeg-task/v1
+task_id: synthetic-demo
+objective: Demonstrate structured evidence without natural-language parsing.
+base_commit: 0000000000000000000000000000000000000000
+profile: pr
+allowed_paths:
+  - src
+denied_paths:
+  - .github/workflows
+sensitive_paths:
+  - .env
+required_checks:
+  - id: unit
+    kind: test
+    argv: [node, --test]
+    cwd: .
+    success_exit_code: 0
+dependency_policy:
+  lockfile_required: false
+budget:
+  tokens: 100
+test_surface:
+  - tests
+verifier_surface:
+  - src/policy.ts
+claims:
+  - id: structured-evidence
+    status: completed
+
