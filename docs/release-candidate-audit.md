@@ -1,14 +1,14 @@
 # AEG v0.1 Release Candidate Audit
 
 Date: 2026-08-18  
-Decision: `PUBLISHED_V0.1.0` / `EXTERNAL_CI_AND_INDEPENDENT_REVIEW_PENDING`
+Decision: `V0.1.1_CANDIDATE_READY_FOR_CONTROLLED_VALIDATION` / `EXTERNAL_CI_AND_INDEPENDENT_REVIEW_PENDING`
 
 ## Local artifact checks
 
 - Required release files are present: README, MIT license, Action metadata, package manifest and lockfile, CLI/Action bundles, Quickstart, threat model, rollback guide, P0 review, read-only workflow template, and synthetic demo.
 - `pnpm exec tsc --noEmit` passed.
 - `pnpm run build` passed with the pinned esbuild toolchain.
-- `pnpm test` passed: 74 tests, including F01-F28, I00-I15, CLI committed-repository integration, Action static-security checks, determinism, privacy sentinel, and budget regressions.
+- `pnpm test` passed: 75 tests, including F01-F28, I00-I15, CLI committed-repository integration, Action static-security checks, release-workflow boundary checks, determinism, privacy sentinel, and budget regressions.
 - CLI bundle SHA-256: `21799D562EF1A7EA1D61DF0709EBA0F7619A5EAFA8C7F25C0BAC4C33F43BF1A6`.
 - Action bundle SHA-256: `EC8C4CAFE5E5DB366AA53C8BB355970E7D6C8E1E20C4D60975463D3A3FA4F4DE`.
 
@@ -29,6 +29,8 @@ Consumers should recompute hashes after checkout rather than rely on a recorded 
 - Release commit: `45abbc88937d4cf0c366e21bdfff06b55c620c7f`.
 - Published tag: `v0.1.0`.
 - Published branches: `main`, `agent/v0-1-initial-release`.
+
+The v0.1.0 clean-checkout smoke exposed a pnpm 11 build-policy incompatibility: the legacy `onlyBuiltDependencies` setting did not allow esbuild to run. The v0.1.1 candidate adds the explicit `allowBuilds.esbuild: true` setting and uses the fixed bundled Node path in validation. The candidate must be published and re-tested from a clean snapshot before being called a passing release.
 
 ## Remaining external boundaries
 
