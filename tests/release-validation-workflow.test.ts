@@ -9,9 +9,11 @@ test("release validation workflow is manual, read-only, immutable, and synthetic
   assert.match(workflow, /actions\/checkout@[0-9a-f]{40}/);
   assert.match(workflow, /actions\/upload-artifact@[0-9a-f]{40}/);
   assert.match(workflow, /uses: \.\//);
-  assert.match(workflow, /ref: v0\.1\.1/);
-  assert.match(workflow, /examples\/synthetic-demo\/agent-task\.yml/);
-  assert.match(workflow, /examples\/synthetic-demo\/agent-trace\.jsonl/);
-  assert.match(workflow, /examples\/synthetic-demo\/evidence\.json/);
-  assert.doesNotMatch(workflow, /pull_request_target|secrets\.|run:\s+.*(npm|pnpm|node|bash|pwsh|powershell)/i);
+  assert.match(workflow, /ref: v0\.1\.2/);
+  assert.match(workflow, /run: node scripts\/prepare-release-validation\.mjs/);
+  assert.match(workflow, /runner\.temp.*agent-task\.yml/);
+  assert.match(workflow, /runner\.temp.*agent-trace\.jsonl/);
+  assert.match(workflow, /runner\.temp.*evidence\.json/);
+  assert.doesNotMatch(workflow, /pull_request_target|secrets\.|run:\s+.*(npm|pnpm|bash|pwsh|powershell)/i);
+  assert.doesNotMatch(workflow, /uses:\s+[^./\s]+\/[^@\s]+@(v|main|master)/i);
 });
