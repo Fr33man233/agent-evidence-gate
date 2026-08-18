@@ -1,0 +1,32 @@
+name: Release validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-synthetic:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: v0.1.1
+      - name: Run AEG against committed synthetic evidence
+        uses: ./
+        with:
+          manifest: examples/synthetic-demo/agent-task.yml
+          trace: examples/synthetic-demo/agent-trace.jsonl
+          evidence: examples/synthetic-demo/evidence.json
+          repository: ${{ github.workspace }}
+          json: gate-report.json
+          markdown: gate-report.md
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        with:
+          name: aeg-release-validation-report
+          path: |
+            gate-report.json
+            gate-report.md
