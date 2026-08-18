@@ -22,7 +22,7 @@ API credits would support maintainer-facing development and validation of read-o
 
 ## Evidence and limitations
 
-The public repository includes the full v0.1 MVP, 74 automated tests, a synthetic demo, a read-only Action, a threat model, rollback guidance, and a controlled-validation workflow. Current CI/E2 evidence is intentionally classified as `E2-candidate`; producer identity and production attestation remain unverified. The project is seeking support to validate whether this evidence boundary is useful in real maintainer workflows and to improve interoperability without weakening privacy or execution boundaries.
+The public repository includes the full v0.1 MVP, 75 automated tests, a synthetic demo, a read-only Action, a threat model, rollback guidance, a controlled-validation workflow, and a focused security/privacy review. Public workflow run `32141322549` passed with `E2-candidate` assurance. Producer identity and production attestation remain unverified. The project is seeking support to validate whether this evidence boundary is useful in real maintainer workflows and to improve interoperability without weakening privacy or execution boundaries.
 
 ## Required user-supplied fields before submission
 
