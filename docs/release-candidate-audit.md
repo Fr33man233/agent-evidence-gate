@@ -1,7 +1,7 @@
 # AEG v0.1 Release Candidate Audit
 
 Date: 2026-08-18  
-Decision: `GO_FOR_RELEASE_PREPARATION` / `BLOCKED_ON_REPOSITORY_AND_EXTERNAL_REVIEW`
+Decision: `PUBLISHED_V0.1.0` / `EXTERNAL_CI_AND_INDEPENDENT_REVIEW_PENDING`
 
 ## Local artifact checks
 
@@ -22,16 +22,21 @@ Consumers should recompute hashes after checkout rather than rely on a recorded 
 - `src/git.ts` uses a read-only Git facts subprocess only; it does not execute candidate-provided argv.
 - The example workflow pins checkout to an immutable commit and grants `contents: read`.
 
-## External blockers
+## Publication record
 
-1. The working tree has no configured Git remote or repository identity.
-2. GitHub CLI (`gh`) is not installed in the current environment, so the required authenticated repository-creation/push path is unavailable.
-3. Public repository creation, initial commit, push, tag, and release publication require the authenticated CLI path and confirmation.
-4. A genuinely independent security/privacy review has not yet been performed.
-5. Real maintainer-controlled CI producer identity and E2 remain unverified.
+- Public repository: https://github.com/Fr33man233/agent-evidence-gate
+- Visibility: public; default branch: `main`.
+- Release commit: `45abbc88937d4cf0c366e21bdfff06b55c620c7f`.
+- Published tag: `v0.1.0`.
+- Published branches: `main`, `agent/v0-1-initial-release`.
+
+## Remaining external boundaries
+
+1. A genuinely independent security/privacy review has not yet been performed.
+2. Real maintainer-controlled CI producer identity and E2 remain unverified.
 
 The public release scope intentionally excludes `research/competitor-runs/`, disposable `spike/`, `node_modules/`, `.pnpm-store/`, generated reports, and the local Word product-plan copy. The formal specifications and `research/spikes/` decision records remain eligible for publication.
 
 ## Next authorized actions
 
-After the repository details are supplied, prepare a release branch/commit plan, ask for final publish confirmation, then perform a read-only controlled CI/E2 validation. Keep the release wording limited to `E2-candidate` until that validation is independently reviewed.
+Perform a read-only controlled CI/E2 validation and independent security/privacy review. Keep the release wording limited to `E2-candidate` until that validation is independently reviewed.
