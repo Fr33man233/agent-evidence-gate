@@ -11,7 +11,7 @@ This record covers a clean public snapshot check and the follow-up patch require
 - `pnpm install --frozen-lockfile` under pnpm `11.19.0` stopped because the legacy `onlyBuiltDependencies` setting did not authorize esbuild's postinstall script.
 - This was a release reproducibility failure, not an AEG policy or candidate-execution failure.
 
-## v0.1.1 candidate correction
+## v0.1.2 candidate correction
 
 The candidate adds the explicit pnpm 11-compatible setting:
 
@@ -28,6 +28,7 @@ Candidate local checks completed:
 - `pnpm run build`: passed.
 - `pnpm test`: 75 passed, 0 failed.
 - New workflow boundary test: passed.
+- The controlled workflow uses a trusted metadata-only fixture preparation script; it does not execute candidate commands or source.
 
 ## Release gate
 
