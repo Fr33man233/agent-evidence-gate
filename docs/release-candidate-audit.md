@@ -1,7 +1,7 @@
 # AEG v0.1 Release Candidate Audit
 
 Date: 2026-08-18  
-Decision: `V0.1.1_CANDIDATE_READY_FOR_CONTROLLED_VALIDATION` / `EXTERNAL_CI_AND_INDEPENDENT_REVIEW_PENDING`
+Decision: `PUBLISHED_V0.1.2` / `CONTROLLED_E2_CANDIDATE_COMPLETE; EXTERNAL_REVIEW_PENDING`
 
 ## Local artifact checks
 
@@ -30,15 +30,18 @@ Consumers should recompute hashes after checkout rather than rely on a recorded 
 - Published tag: `v0.1.0`.
 - Published branches: `main`, `agent/v0-1-initial-release`.
 
-The v0.1.0 clean-checkout smoke exposed a pnpm 11 build-policy incompatibility: the legacy `onlyBuiltDependencies` setting did not allow esbuild to run. The v0.1.1 candidate adds the explicit `allowBuilds.esbuild: true` setting and uses the fixed bundled Node path in validation. The candidate must be published and re-tested from a clean snapshot before being called a passing release.
+- Patch releases: `v0.1.1` and `v0.1.2`.
+- Controlled workflow run: `32141322549`, success, `pass / E2-candidate`.
+
+The v0.1.0 clean-checkout smoke exposed a pnpm 11 build-policy incompatibility. The v0.1.2 release adds the explicit `allowBuilds.esbuild: true` setting, passes clean-checkout validation, and includes the controlled metadata-only workflow.
 
 ## Remaining external boundaries
 
-1. A genuinely independent security/privacy review has not yet been performed.
+1. The focused review is not a third-party security audit.
 2. Real maintainer-controlled CI producer identity and E2 remain unverified.
 
 The public release scope intentionally excludes `research/competitor-runs/`, disposable `spike/`, `node_modules/`, `.pnpm-store/`, generated reports, and the local Word product-plan copy. The formal specifications and `research/spikes/` decision records remain eligible for publication.
 
 ## Next authorized actions
 
-Perform a read-only controlled CI/E2 validation and independent security/privacy review. Keep the release wording limited to `E2-candidate` until that validation is independently reviewed.
+Maintain the `E2-candidate` wording, seek third-party security review, and collect real maintainer usage evidence before making production-attestation claims.
