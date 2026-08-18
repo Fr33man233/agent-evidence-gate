@@ -6,7 +6,7 @@ This draft is for the official form at <https://openai.com/form/codex-open-sourc
 
 - Project name: Agent Evidence Gate (AEG)
 - GitHub repository: <https://github.com/Fr33man233/agent-evidence-gate>
-- Public release: `v0.1.1` patch release (MIT)
+- Public release: `v0.1.2` patch release (MIT)
 
 ## Brief description
 
