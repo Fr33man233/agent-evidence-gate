@@ -40,6 +40,13 @@ Pin a released commit or tag of this repository and grant only `contents: read`.
 
 Read [docs/threat-model.md](docs/threat-model.md) before using AEG as a required check. Read [docs/release-rollback.md](docs/release-rollback.md) for version pinning and rollback. AEG can establish structured consistency and policy findings; it cannot prove that a producer, test, dependency, or verifier is honest merely because a receipt says so.
 
+## Maintainer resources
+
+- [Security policy](SECURITY.md) for private vulnerability reporting and hard security boundaries.
+- [Contributing guide](CONTRIBUTING.md) for deterministic tests, review expectations, and safe change boundaries.
+- [Release validation record](docs/release-validation-2026-08-18.md) for clean-checkout verification.
+- [Controlled CI/E2 validation](docs/controlled-ci-e2-validation-2026-08-18.md) for the read-only synthetic workflow and its `E2-candidate` limitation.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
