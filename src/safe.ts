@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFileSync, statSync } from "node:fs";
+import { lstatSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 export const LIMITS = Object.freeze({
@@ -23,7 +23,11 @@ export class AegInputError extends Error {
 
 export function readBoundedFile(filePath: string, maximumBytes: number, code: string): string {
   const absolute = resolve(filePath);
-  const size = statSync(absolute).size;
+  let details: ReturnType<typeof lstatSync>;
+  try { details = lstatSync(absolute); } catch { throw new AegInputError(code, "input is unavailable"); }
+  if (details.isSymbolicLink()) throw new AegInputError("AEG010", "input must not be a link");
+  if (!details.isFile()) throw new AegInputError(code, "input must be an ordinary file");
+  const size = details.size;
   if (size > maximumBytes) throw new AegInputError(code, "input exceeds the configured size limit");
   return readFileSync(absolute, "utf8");
 }

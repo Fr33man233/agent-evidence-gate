@@ -7347,7 +7347,15 @@ var AegInputError = class extends Error {
 };
 function readBoundedFile(filePath, maximumBytes, code2) {
   const absolute = (0, import_node_path.resolve)(filePath);
-  const size = (0, import_node_fs.statSync)(absolute).size;
+  let details;
+  try {
+    details = (0, import_node_fs.lstatSync)(absolute);
+  } catch {
+    throw new AegInputError(code2, "input is unavailable");
+  }
+  if (details.isSymbolicLink()) throw new AegInputError("AEG010", "input must not be a link");
+  if (!details.isFile()) throw new AegInputError(code2, "input must be an ordinary file");
+  const size = details.size;
   if (size > maximumBytes) throw new AegInputError(code2, "input exceeds the configured size limit");
   return (0, import_node_fs.readFileSync)(absolute, "utf8");
 }
