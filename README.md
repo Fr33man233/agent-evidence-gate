@@ -36,6 +36,21 @@ The synthetic demo is intentionally offline and contains no secrets or real proj
 
 Pin a released commit or tag of this repository and grant only `contents: read`. Check out the workspace using a workflow appropriate for your trust boundary, then invoke the action with the three evidence paths. A workflow template is in [examples/read-only-workflow.yml](examples/read-only-workflow.yml). Do not use a local `./` action from an untrusted pull request when the verifier itself is under review.
 
+```yaml
+permissions:
+  contents: read
+
+steps:
+  - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+  - uses: Fr33man233/agent-evidence-gate@v0.1.3
+    with:
+      manifest: agent-task.yml
+      trace: agent-trace.jsonl
+      evidence: evidence.json
+```
+
+For a higher-assurance consumer workflow, replace the release tag with the reviewed full commit SHA.
+
 ## Security and limitations
 
 Read [docs/threat-model.md](docs/threat-model.md) before using AEG as a required check. Read [docs/release-rollback.md](docs/release-rollback.md) for version pinning and rollback. AEG can establish structured consistency and policy findings; it cannot prove that a producer, test, dependency, or verifier is honest merely because a receipt says so.
