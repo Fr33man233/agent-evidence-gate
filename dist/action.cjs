@@ -7315,11 +7315,8 @@ var require_dist = __commonJS({
 });
 
 // src/action.ts
-var import_node_fs5 = require("node:fs");
-var import_node_path6 = require("node:path");
-
-// src/runner.ts
 var import_node_fs4 = require("node:fs");
+var import_node_path6 = require("node:path");
 
 // src/evidence.ts
 var import_node_path2 = require("node:path");
@@ -7351,8 +7348,13 @@ function assertNoLinkAncestors(absolute) {
     let details;
     try {
       details = (0, import_node_fs.lstatSync)(current);
-    } catch {
-      throw new AegInputError("AEG003", "input is unavailable");
+    } catch (error) {
+      const errorCode = error && typeof error === "object" && "code" in error ? error.code : void 0;
+      if (errorCode !== "ENOENT" && errorCode !== "ENOTDIR") throw new AegInputError("AEG003", "input is unavailable");
+      const parent2 = (0, import_node_path.dirname)(current);
+      if (parent2 === current) break;
+      current = parent2;
+      continue;
     }
     if (details.isSymbolicLink()) throw new AegInputError("AEG010", "input path traverses a link");
     const parent = (0, import_node_path.dirname)(current);
@@ -7500,6 +7502,7 @@ function readArtifact(root, artifactPath) {
   const target = (0, import_node_path3.join)(root, artifactPath);
   const relativePath = (0, import_node_path3.relative)(root, target).replaceAll("\\", "/");
   if (relativePath === "" || relativePath.startsWith("../") || (0, import_node_path3.isAbsolute)(relativePath)) throw new AegInputError("AEG010", "artifact path escapes repository root");
+  assertNoLinkAncestors(target);
   try {
     const details = (0, import_node_fs2.lstatSync)(target);
     if (details.isSymbolicLink() || !details.isFile()) throw new AegInputError("AEG010", "artifact state is unsafe");
@@ -7507,7 +7510,9 @@ function readArtifact(root, artifactPath) {
     return { path: artifactPath, state: "file", sha256: digest(bytes), size: bytes.length };
   } catch (error) {
     if (error instanceof AegInputError) throw error;
-    return { path: artifactPath, state: "missing" };
+    const errorCode = error && typeof error === "object" && "code" in error ? error.code : void 0;
+    if (errorCode === "ENOENT" || errorCode === "ENOTDIR") return { path: artifactPath, state: "missing" };
+    throw new AegInputError("AEG003", "artifact state is unavailable");
   }
 }
 function parseStatus(output, paths) {
@@ -7980,6 +7985,7 @@ function evaluate(manifest, trace, evidence) {
 var import_node_fs3 = require("node:fs");
 var import_node_path5 = require("node:path");
 function regularFile(path) {
+  assertNoLinkAncestors(path);
   let details;
   try {
     details = (0, import_node_fs3.lstatSync)(path);
@@ -7995,6 +8001,7 @@ function safeReceiptId(id) {
 }
 function discoverReceiptPaths(inputPath) {
   const root = (0, import_node_path5.resolve)(inputPath);
+  assertNoLinkAncestors(root);
   let input2;
   try {
     input2 = (0, import_node_fs3.lstatSync)(root);
@@ -8088,7 +8095,7 @@ function verify(options) {
   if (!options.repoPath) throw new AegInputError("AEG003", "repository context is required for Git state binding");
   const manifest = loadManifest(options.manifestPath);
   const trace = loadTrace(options.tracePath);
-  const receipts = discoverReceiptPaths(options.receiptsPath).map((path) => parseOmkReceipt((0, import_node_fs4.readFileSync)(path, "utf8")));
+  const receipts = discoverReceiptPaths(options.receiptsPath).map((path) => parseOmkReceipt(readBoundedFile(path, LIMITS.receiptBytes, "AEG003")));
   const evidence = collectNativeEvidence(manifest, trace, receipts, options.repoPath);
   for (const id of evidence.receipt_ids) {
     const receipt = receipts.find((item) => item.core.receiptId === id);
@@ -8108,8 +8115,8 @@ function repository() {
   return input("repo") || process.env.GITHUB_WORKSPACE || "";
 }
 function write(path, text) {
-  (0, import_node_fs5.mkdirSync)((0, import_node_path6.dirname)(path), { recursive: true });
-  (0, import_node_fs5.writeFileSync)(path, text, "utf8");
+  (0, import_node_fs4.mkdirSync)((0, import_node_path6.dirname)(path), { recursive: true });
+  (0, import_node_fs4.writeFileSync)(path, text, "utf8");
 }
 var code = 1;
 try {

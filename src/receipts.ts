@@ -1,8 +1,9 @@
 import { lstatSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { AegInputError, LIMITS } from "./safe.js";
+import { AegInputError, assertNoLinkAncestors, LIMITS } from "./safe.js";
 
 function regularFile(path: string): number {
+  assertNoLinkAncestors(path);
   let details: ReturnType<typeof lstatSync>;
   try {
     details = lstatSync(path);
@@ -20,6 +21,7 @@ function safeReceiptId(id: string): boolean {
 
 export function discoverReceiptPaths(inputPath: string): string[] {
   const root = resolve(inputPath);
+  assertNoLinkAncestors(root);
   let input: ReturnType<typeof lstatSync>;
   try {
     input = lstatSync(root);

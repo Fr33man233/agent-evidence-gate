@@ -1,11 +1,10 @@
-import { readFileSync } from "node:fs";
 import { collectNativeEvidence } from "./evidence.js";
 import { assertWorkspaceMatches, captureWorkspaceFingerprint, type GitScope, type OmkWorkspaceFingerprint } from "./git.js";
 import { loadManifest } from "./manifest.js";
 import { parseOmkReceipt, type OmkReceipt } from "./omk-receipt.js";
 import { evaluate } from "./policy.js";
 import { discoverReceiptPaths } from "./receipts.js";
-import { AegInputError } from "./safe.js";
+import { AegInputError, LIMITS, readBoundedFile } from "./safe.js";
 import { loadTrace } from "./trace.js";
 import type { GateReport } from "./types.js";
 
@@ -23,7 +22,7 @@ export function verify(options: VerifyOptions): GateReport {
   if (!options.repoPath) throw new AegInputError("AEG003", "repository context is required for Git state binding");
   const manifest = loadManifest(options.manifestPath);
   const trace = loadTrace(options.tracePath);
-  const receipts = discoverReceiptPaths(options.receiptsPath).map((path) => parseOmkReceipt(readFileSync(path, "utf8")));
+  const receipts = discoverReceiptPaths(options.receiptsPath).map((path) => parseOmkReceipt(readBoundedFile(path, LIMITS.receiptBytes, "AEG003")));
   const evidence = collectNativeEvidence(manifest, trace, receipts, options.repoPath);
   for (const id of evidence.receipt_ids) {
     const receipt = receipts.find((item) => item.core.receiptId === id);

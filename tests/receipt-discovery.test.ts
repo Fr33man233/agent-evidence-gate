@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -25,6 +25,20 @@ test("rejects an OMK store entry without a receipt", () => {
   try {
     mkdirSync(join(root, "receipt-a"));
     assert.throws(() => discoverReceiptPaths(root), (error: unknown) => error instanceof AegInputError && error.code === "AEG003");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("rejects a receipt file reached through an ancestor junction", () => {
+  const root = mkdtempSync(join(tmpdir(), "aeg-receipts-link-"));
+  try {
+    const target = join(root, "target");
+    const link = join(root, "link");
+    mkdirSync(target);
+    writeFileSync(join(target, "receipt.json"), "{}", "utf8");
+    symlinkSync(target, link, "junction");
+    assert.throws(() => discoverReceiptPaths(join(link, "receipt.json")), (error: unknown) => error instanceof AegInputError && error.code === "AEG010");
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

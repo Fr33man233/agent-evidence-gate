@@ -21,11 +21,18 @@ export class AegInputError extends Error {
   }
 }
 
-function assertNoLinkAncestors(absolute: string): void {
+export function assertNoLinkAncestors(absolute: string): void {
   let current = absolute;
   while (true) {
     let details: ReturnType<typeof lstatSync>;
-    try { details = lstatSync(current); } catch { throw new AegInputError("AEG003", "input is unavailable"); }
+    try { details = lstatSync(current); } catch (error) {
+      const errorCode = error && typeof error === "object" && "code" in error ? (error as { code?: unknown }).code : undefined;
+      if (errorCode !== "ENOENT" && errorCode !== "ENOTDIR") throw new AegInputError("AEG003", "input is unavailable");
+      const parent = dirname(current);
+      if (parent === current) break;
+      current = parent;
+      continue;
+    }
     if (details.isSymbolicLink()) throw new AegInputError("AEG010", "input path traverses a link");
     const parent = dirname(current);
     if (parent === current) break;

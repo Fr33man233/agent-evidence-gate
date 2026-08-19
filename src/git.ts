@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import { createHash, timingSafeEqual } from "node:crypto";
 import { lstatSync, readFileSync, realpathSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
-import { AegInputError, assertSafeRepoPath } from "./safe.js";
+import { AegInputError, assertNoLinkAncestors, assertSafeRepoPath } from "./safe.js";
 
 const GIT_ENV_BLOCKLIST = new Set(["GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_CEILING_DIRECTORIES", "GIT_COMMON_DIR", "GIT_DIFF_OPTS", "GIT_DIR", "GIT_EXTERNAL_DIFF", "GIT_INDEX_FILE", "GIT_NAMESPACE", "GIT_OBJECT_DIRECTORY", "GIT_PREFIX", "GIT_WORK_TREE"]);
 const MAX_GIT_OUTPUT = 16 * 1024 * 1024;
@@ -25,7 +25,18 @@ function within(path: string, artifactPaths: string[]): boolean { return artifac
 function readArtifact(root: string, artifactPath: string): ArtifactState {
   const target = join(root, artifactPath); const relativePath = relative(root, target).replaceAll("\\", "/");
   if (relativePath === "" || relativePath.startsWith("../") || isAbsolute(relativePath)) throw new AegInputError("AEG010", "artifact path escapes repository root");
-  try { const details = lstatSync(target); if (details.isSymbolicLink() || !details.isFile()) throw new AegInputError("AEG010", "artifact state is unsafe"); const bytes = readFileSync(target); return { path: artifactPath, state: "file", sha256: digest(bytes), size: bytes.length }; } catch (error) { if (error instanceof AegInputError) throw error; return { path: artifactPath, state: "missing" }; }
+  assertNoLinkAncestors(target);
+  try {
+    const details = lstatSync(target);
+    if (details.isSymbolicLink() || !details.isFile()) throw new AegInputError("AEG010", "artifact state is unsafe");
+    const bytes = readFileSync(target);
+    return { path: artifactPath, state: "file", sha256: digest(bytes), size: bytes.length };
+  } catch (error) {
+    if (error instanceof AegInputError) throw error;
+    const errorCode = error && typeof error === "object" && "code" in error ? (error as { code?: unknown }).code : undefined;
+    if (errorCode === "ENOENT" || errorCode === "ENOTDIR") return { path: artifactPath, state: "missing" };
+    throw new AegInputError("AEG003", "artifact state is unavailable");
+  }
 }
 function parseStatus(output: Buffer, paths: string[]): string[] {
   const changed = new Set<string>();
