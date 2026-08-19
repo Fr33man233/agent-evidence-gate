@@ -17,8 +17,10 @@ jobs:
         env:
           AEG_INPUT_DIR: ${{ runner.temp }}/aeg-validation
         run: node scripts/prepare-release-validation.mjs "$AEG_INPUT_DIR"
-      - name: Run AEG against committed synthetic evidence
-        uses: ./
+      - name: Run published v0.1.3 action against historical synthetic evidence
+        # This workflow intentionally validates the unchanged public v0.1.3 contract.
+        # v0.2.0 is not published and must not be tested through the v1 envelope.
+        uses: Fr33man233/agent-evidence-gate@d82c7863f48878bfee66e978e7569c464de48ea2
         with:
           manifest: ${{ runner.temp }}/aeg-validation/agent-task.yml
           trace: ${{ runner.temp }}/aeg-validation/agent-trace.jsonl

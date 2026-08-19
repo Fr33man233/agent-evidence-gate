@@ -9,11 +9,13 @@ test("release validation workflow is manual, read-only, immutable, and synthetic
   assert.match(workflow, /permissions:\s+contents:\s+read/);
   assert.match(workflow, /actions\/checkout@[0-9a-f]{40}/);
   assert.match(workflow, /actions\/upload-artifact@[0-9a-f]{40}/);
-  assert.match(workflow, /uses: \.\//);
+  assert.match(workflow, /Fr33man233\/agent-evidence-gate@d82c7863f48878bfee66e978e7569c464de48ea2/);
+  assert.doesNotMatch(workflow, /uses: \.\//);
   assert.match(workflow, /run: node scripts\/prepare-release-validation\.mjs/);
   assert.match(workflow, /runner\.temp.*agent-task\.yml/);
   assert.match(workflow, /runner\.temp.*agent-trace\.jsonl/);
   assert.match(workflow, /runner\.temp.*evidence\.json/);
+  assert.match(workflow, /v0\.1\.3 historical|published v0\.1\.3/i);
   assert.doesNotMatch(workflow, /pull_request_target|secrets\.|run:\s+.*(npm|pnpm|bash|pwsh|powershell)/i);
   assert.doesNotMatch(workflow, /uses:\s+[^./\s]+\/[^@\s]+@(v|main|master)/i);
 });
@@ -32,7 +34,7 @@ test("Marketplace metadata and consumer example stay aligned with the release ve
 
   assert.equal(action.author, "Freeman Huang");
   assert.deepEqual(action.branding, { icon: "shield", color: "green" });
-  assert.match(workflow, new RegExp(`ref: ${releaseTag.replaceAll(".", "\\.")}`));
+  assert.match(workflow, /ref: v0\.1\.3/);
   assert.match(readme, new RegExp(`uses: Fr33man233/agent-evidence-gate@${releaseTag.replaceAll(".", "\\.")}`));
   assert.match(readme, /permissions:\s+contents:\s+read/);
 });
