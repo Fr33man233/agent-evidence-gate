@@ -1,5 +1,7 @@
 # Release Validation — 2026-08-18
 
+> 归档说明：本文记录 v0.1.0 至 v0.1.2 的 clean-checkout 发布验证，不覆盖 v0.1.3。后继事实见 [v0.1.3 发布记录](releases/v0.1.3-release-record.md)，完整索引见 [版本历史与档案审计](version-history.md)。
+
 ## Scope
 
 This record covers a clean public snapshot check and the follow-up patch required to make dependency installation reproducible. It does not establish real CI producer trust or production E2 attestation.

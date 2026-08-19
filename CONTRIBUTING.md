@@ -1,6 +1,6 @@
 # Contributing to Agent Evidence Gate
 
-AEG accepts focused changes that preserve deterministic, privacy-first verification. Before opening a pull request, read the [threat model](docs/threat-model.md), [v0.1 contract](v0.1-mvp-contract.md), and [release rollback guide](docs/release-rollback.md).
+AEG accepts focused changes that preserve deterministic, privacy-first verification. 开始当前版本开发前，请同时阅读 [v0.2.0 原生 OMK 设计](docs/superpowers/specs/2026-08-19-native-omk-receipt-v3-design.md)和[版本历史与档案审计](docs/version-history.md)。历史安全边界仍见 [threat model](docs/threat-model.md)、[v0.1 contract](v0.1-mvp-contract.md)和 [release rollback guide](docs/release-rollback.md)。
 
 ## Local checks
 

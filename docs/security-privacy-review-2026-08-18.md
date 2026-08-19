@@ -1,5 +1,7 @@
 # Security and Privacy Review — 2026-08-18
 
+> 归档说明：本文是针对 v0.1.2 candidate 的仓库内 focused review，不是 v0.1.3 的独立评审或第三方审计。v0.1.3 的发布事实和未扩张的安全边界见 [v0.1.3 发布记录](releases/v0.1.3-release-record.md)。
+
 ## Review scope
 
 This is a focused release review of the v0.1.2 candidate, covering the verifier boundary, read-only Action, controlled validation workflow, metadata-only fixture preparation, input privacy, and public repository scope. It is an in-thread technical review, not a third-party audit or a production security certification.

@@ -59,6 +59,9 @@ Read [docs/threat-model.md](docs/threat-model.md) before using AEG as a required
 
 - [Security policy](SECURITY.md) for private vulnerability reporting and hard security boundaries.
 - [Contributing guide](CONTRIBUTING.md) for deterministic tests, review expectations, and safe change boundaries.
+- [变更日志](CHANGELOG.md)：公开版本变化与当前未发布范围。
+- [版本历史与档案审计](docs/version-history.md)：权威 tag target、验证证据与不可追溯记录。
+- [v0.1.3 发布记录](docs/releases/v0.1.3-release-record.md)：最新公开版本、受控 run、artifact 与可信边界。
 - [Release validation record](docs/release-validation-2026-08-18.md) for clean-checkout verification.
 - [Controlled CI/E2 validation](docs/controlled-ci-e2-validation-2026-08-18.md) for the read-only synthetic workflow and its `E2-candidate` limitation.
 - [Security and privacy review](docs/security-privacy-review-2026-08-18.md) for the release gate and residual risks.

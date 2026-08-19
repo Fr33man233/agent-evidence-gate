@@ -1,5 +1,7 @@
 # Release and Rollback
 
+公开版本身份、验证记录和已知本地 tag 漂移统一索引在[版本历史与档案审计](version-history.md)。验证 v0.1.1 或 v0.1.2 时，应使用其中记录的远端 commit SHA，不应只依赖本地 tag 名称。
+
 ## Local release checklist
 
 1. Run `pnpm install --frozen-lockfile --ignore-scripts`, `pnpm run build`, and `pnpm test` with the fixed Node bundle.

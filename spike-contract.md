@@ -6,7 +6,7 @@
 > 项目决定：`PIVOT_ACCEPTED`  
 > 授权状态：`CONDITIONAL GO`——只允许执行本文定义的可丢弃技术 Spike；不授权 v0.1、公开发布、第三方真实仓库/生产 PR 接入或生产代码实现  
 > 上位规格：[v0-specification.md](./v0-specification.md)  
-> 证据依据：[竞品运行级深审报告](./research/competitor-runs/2026-08-14/run-level-review.md)
+> 证据依据：原始 `research/competitor-runs/2026-08-14/run-level-review.md` 未进入当前 Git 历史，本次审计也未取得可验证副本，不能补造；缺失情况见 [版本历史与档案审计](./docs/version-history.md)。
 
 ## 1. 合同目的
 

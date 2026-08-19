@@ -1,5 +1,7 @@
 # AEG v0.1 Release Candidate Audit
 
+> 归档说明：本文保留截至 v0.1.2 的当时发布候选结论，不代表当前版本状态。v0.1.3 的发布后事实见 [v0.1.3 发布记录](releases/v0.1.3-release-record.md)，完整索引见 [版本历史与档案审计](version-history.md)。
+
 Date: 2026-08-18  
 Decision: `PUBLISHED_V0.1.2` / `CONTROLLED_E2_CANDIDATE_COMPLETE; EXTERNAL_REVIEW_PENDING`
 
