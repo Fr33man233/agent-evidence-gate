@@ -11,6 +11,6 @@
 
 Rollback is a consumer-side pin change to the previous reviewed commit/tag. Because AEG is stateless and performs no external writes, rollback does not require database migration, receipt-ledger repair, credential rotation, or queue draining. Preserve the failing report as a local CI artifact, then rerun the previous pinned verifier against the same inputs.
 
-## Release boundary for this workspace
+## Public release boundary
 
-This workspace has no configured GitHub remote or repository-specific publish target. The local v0.1 package is release-ready as an artifact, but repository creation, push, tag, Action Marketplace publication, and real CI/E2 validation still require the target repository details and a final write confirmation.
+The public release target is `https://github.com/Fr33man233/agent-evidence-gate`. Marketplace publication improves discovery but does not change AEG's runtime trust boundary, establish verified-creator status, or prove production CI identity. Each published release must remain traceable to a reviewed immutable tag and must retain the real CI/E2 limitation.
