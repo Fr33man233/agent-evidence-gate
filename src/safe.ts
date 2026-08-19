@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { lstatSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 
 export const LIMITS = Object.freeze({
   manifestBytes: 1024 * 1024,
@@ -21,8 +21,21 @@ export class AegInputError extends Error {
   }
 }
 
+function assertNoLinkAncestors(absolute: string): void {
+  let current = absolute;
+  while (true) {
+    let details: ReturnType<typeof lstatSync>;
+    try { details = lstatSync(current); } catch { throw new AegInputError("AEG003", "input is unavailable"); }
+    if (details.isSymbolicLink()) throw new AegInputError("AEG010", "input path traverses a link");
+    const parent = dirname(current);
+    if (parent === current) break;
+    current = parent;
+  }
+}
+
 export function readBoundedFile(filePath: string, maximumBytes: number, code: string): string {
   const absolute = resolve(filePath);
+  assertNoLinkAncestors(absolute);
   let details: ReturnType<typeof lstatSync>;
   try { details = lstatSync(absolute); } catch { throw new AegInputError(code, "input is unavailable"); }
   if (details.isSymbolicLink()) throw new AegInputError("AEG010", "input must not be a link");

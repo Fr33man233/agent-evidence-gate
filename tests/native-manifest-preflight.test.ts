@@ -38,6 +38,7 @@ test("rejects directory junctions before bounded input reads", () => {
     writeFileSync(join(target, "agent-task.yml"), "schema_version: aeg-task/v2\ntask_id: link\nprofile: local\nrequired_checks: []\n", "utf8");
     symlinkSync(target, link, "junction");
     assert.throws(() => loadManifest(link), (error: unknown) => error instanceof AegInputError && error.code === "AEG010");
+    assert.throws(() => loadManifest(join(link, "agent-task.yml")), (error: unknown) => error instanceof AegInputError && error.code === "AEG010");
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

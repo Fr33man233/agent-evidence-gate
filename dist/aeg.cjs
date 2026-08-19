@@ -7346,8 +7346,24 @@ var AegInputError = class extends Error {
     this.name = "AegInputError";
   }
 };
+function assertNoLinkAncestors(absolute) {
+  let current = absolute;
+  while (true) {
+    let details;
+    try {
+      details = (0, import_node_fs.lstatSync)(current);
+    } catch {
+      throw new AegInputError("AEG003", "input is unavailable");
+    }
+    if (details.isSymbolicLink()) throw new AegInputError("AEG010", "input path traverses a link");
+    const parent = (0, import_node_path.dirname)(current);
+    if (parent === current) break;
+    current = parent;
+  }
+}
 function readBoundedFile(filePath, maximumBytes, code) {
   const absolute = (0, import_node_path.resolve)(filePath);
+  assertNoLinkAncestors(absolute);
   let details;
   try {
     details = (0, import_node_fs.lstatSync)(absolute);
