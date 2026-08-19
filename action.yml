@@ -8,8 +8,8 @@ inputs:
   trace:
     description: Path to agent-trace.jsonl in the checked-out workspace.
     required: true
-  evidence:
-    description: Path to an OMK v3 receipt or maintainer-CI envelope JSON.
+  receipts:
+    description: Path to an OMK EvidenceReceipt v3 JSON file or receipt store directory.
     required: true
   repository:
     description: Repository workspace used for read-only Git state binding; defaults to GITHUB_WORKSPACE.
@@ -23,7 +23,7 @@ inputs:
     required: false
     default: gate-report.md
 runs:
-  using: node20
+  using: node24
   main: dist/action.cjs
 branding:
   icon: shield

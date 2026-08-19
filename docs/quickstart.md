@@ -1,26 +1,27 @@
-# AEG v0.1 Quickstart
+# AEG v0.2.0 本地 Quickstart
 
-## Inputs
+v0.2.0 直接读取原生 OMK EvidenceReceipt v3、`aeg-task/v2` manifest、`aeg-trace/v1` trace 和 Git workspace。Receipt 最高为 E1，只有 `local` profile 支持通过；`pr` 与 `protected` 会以 `AEG070` 失败。
 
-`agent-task.yml` declares the task ID, profile, allowed/denied/sensitive paths, required check IDs and canonical argv/cwd, dependency policy, resource budgets, test/verifier surfaces, and stable C2 claim IDs.
+## CLI
 
-`agent-trace.jsonl` is bounded JSONL. Every event has a schema version, run ID, event ID, sequence, timestamp, producer, and structured data. Raw prompt, source, credentials, environment, and unbounded command output are rejected.
+```powershell
+node dist/aeg.cjs verify `
+  --manifest agent-task.yml `
+  --trace agent-trace.jsonl `
+  --receipts path/to/receipt.json `
+  --repo path/to/repository `
+  --json gate-report.json `
+  --markdown gate-report.md
+```
 
-The evidence JSON is either an OMK v3 receipt or a maintainer-CI envelope. Both adapters map into the same canonical fields. A trusted workflow and current repository/head context are required for `E2-candidate`; producer self-claims never upgrade E1.
+`--evidence` 已删除，不会自动识别 v0.1 envelope。Receipt 中记录的 command 只用于精确匹配，AEG 永不执行它。
 
-## Profiles
+## 输入边界
 
-| Profile | Minimum assurance | Missing ordinary evidence | Surface changes |
-| --- | --- | --- | --- |
-| `local` | E1 | warning | warning |
-| `pr` | E2-candidate | warning | warning/approval |
-| `protected` | E2-candidate | fail for enforced dimensions | fail without explicit approval |
+manifest 的 required check 必须声明 `shell` 或 `argv` command descriptor 与仓库相对 `cwd`。Receipt store 只允许一层安全 ID、`receipt.json`、最多 64 张 Receipt、总计 8 MiB；单张 Receipt 最大 1 MiB。未知 schema、重复 key、raw output、credential、link/junction、scope escape 和 digest 不匹配均失败封闭。
 
-## Exit codes
+trace 只提供结构化 scope、sensitive access、dependency、resource、test/verifier surface 和 completion 事实。trace `run_id` 必须等于选中 Receipt 的 `goalId`。
 
-The JSON report is the source of truth. Exit code `0` means pass, `1` means fail, and `2` means warning or approval required. Input rejection is reported as a fail with the stable preflight reason code.
+## 安全边界
 
-## Safe operating boundary
-
-AEG reads only the named evidence files and Git metadata. It never executes a candidate command, test, package script, workflow, shell, or network request. The command recorded in a trace is evidence to compare against the manifest, not an instruction to run.
-
+AEG 只读有界输入和 Git 事实，不调用 LLM/API/network，不读取 secrets，不执行候选代码、Receipt command、package、test 或 script，也不使用 `pull_request_target`。报告不回显 claim prose、command、absolute cwd、stdout/stderr、environment 或 credential。

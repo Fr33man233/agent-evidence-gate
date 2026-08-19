@@ -1,14 +1,14 @@
 import { canonicalJson } from "./safe.js";
 import type { AssuranceLevel, GateReport, ProfileName } from "./types.js";
 
-export function requiredAssurance(profile: ProfileName): AssuranceLevel { return profile === "local" ? "E1" : "E2-candidate"; }
+export function requiredAssurance(_profile: ProfileName): AssuranceLevel { return "E1"; }
 
 export function preflightFailure(profile: ProfileName, code: string): GateReport {
-  return { schema_version: "aeg-report/v1", policy_verdict: "fail", assurance_level: "E0", required_assurance: requiredAssurance(profile), gate_verdict: "fail", profile, reason_codes: [code], findings: [{ id: code, status: "fail", severity: "error", summary: "Evidence input was rejected before policy evaluation.", evidence_refs: [], remediation_code: "AEG-REMEDIATION-FIX-INPUT", remediation: "Correct the structured input and rerun verification.", limitations: ["Untrusted input content is intentionally not echoed."] }], limitations: ["No policy or assurance decision was made after input rejection."] };
+  return { schema_version: "aeg-report/v2", policy_verdict: "fail", assurance_level: "E0", required_assurance: requiredAssurance(profile), gate_verdict: "fail", profile, reason_codes: [code], findings: [{ id: code, status: "fail", severity: "error", summary: "Evidence input was rejected before policy evaluation.", evidence_refs: [], remediation_code: "AEG-REMEDIATION-FIX-INPUT", remediation: "Correct the structured input and rerun verification.", limitations: ["Untrusted input content is intentionally not echoed."] }], limitations: ["No policy or assurance decision was made after input rejection."] };
 }
 
 export function preflightSuccess(profile: ProfileName): GateReport {
-  return { schema_version: "aeg-report/v1", policy_verdict: "warn", assurance_level: "E0", required_assurance: requiredAssurance(profile), gate_verdict: "warn", profile, reason_codes: ["AEG-PREFLIGHT-ONLY"], findings: [{ id: "AEG-PREFLIGHT-ONLY", status: "warn", severity: "warning", summary: "Structured inputs passed preflight; policy evaluation is not yet enabled.", evidence_refs: [], remediation_code: "AEG-REMEDIATION-CONTINUE-INTEGRATION", remediation: "Provide a supported evidence adapter after the core policy engine is enabled.", limitations: ["This checkpoint deliberately makes no pass claim."] }], limitations: ["Preflight-only report; no evidence assurance has been established."] };
+  return { schema_version: "aeg-report/v2", policy_verdict: "warn", assurance_level: "E0", required_assurance: requiredAssurance(profile), gate_verdict: "warn", profile, reason_codes: ["AEG-PREFLIGHT-ONLY"], findings: [{ id: "AEG-PREFLIGHT-ONLY", status: "warn", severity: "warning", summary: "Structured inputs passed preflight; policy evaluation is not yet enabled.", evidence_refs: [], remediation_code: "AEG-REMEDIATION-CONTINUE-INTEGRATION", remediation: "Provide native OMK receipts after the core policy engine is enabled.", limitations: ["This checkpoint deliberately makes no pass claim."] }], limitations: ["Preflight-only report; no evidence assurance has been established."] };
 }
 
 export function renderMarkdown(report: GateReport): string {

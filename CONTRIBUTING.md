@@ -4,7 +4,7 @@ AEG accepts focused changes that preserve deterministic, privacy-first verificat
 
 ## Local checks
 
-Use Node 20 or newer within the supported range and a current pnpm release that supports `allowBuilds`. Install from the lockfile, then run:
+Use Node 24 (or the package-supported Node >=22.19 <25) and a current pnpm release that supports `allowBuilds`. Install from the lockfile, then run:
 
 ```powershell
 pnpm install --frozen-lockfile
@@ -17,11 +17,12 @@ The test suite must remain deterministic and use synthetic fixtures. Do not add 
 
 ## Change boundaries
 
-- Preserve the `adapter -> canonical profile -> policy engine -> report renderer` flow.
+- v0.2.0 直接读取原生 OMK Receipt v3；不得重新引入 v0.1 evidence envelope、`maintainer_ci` adapter 或 evidence 内嵌 trust context。
 - Keep the CLI and Action read-only with no candidate command execution.
-- Keep `E2-candidate` wording separate from production attestation.
+- 所有 Receipt 仅为 E1，只有 `local` profile 可通过；不得把 Action 或 Receipt 描述为 E2、独立 CI 或生产 attestation。
 - Add a regression test for every policy, privacy, determinism, or data-boundary change.
 - Do not use `pull_request_target` or grant write permissions to validation workflows.
+- 一版本一任务：每项产品版本必须在 AEG 项目中使用独立 Codex 任务。本任务只负责 v0.2.0；开始 v0.3.0 或后续版本前，必须新建任务、完成新的 preflight 和批准设计，不得继续堆叠到本任务。
 
 ## Pull requests
 

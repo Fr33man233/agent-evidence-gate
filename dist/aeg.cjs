@@ -2293,7 +2293,7 @@ var require_string = __commonJS({
   "node_modules/.pnpm/yaml@2.8.1/node_modules/yaml/dist/schema/common/string.js"(exports2) {
     "use strict";
     var stringifyString = require_stringifyString();
-    var string2 = {
+    var string = {
       identify: (value) => typeof value === "string",
       default: true,
       tag: "tag:yaml.org,2002:str",
@@ -2303,7 +2303,7 @@ var require_string = __commonJS({
         return stringifyString.stringifyString(item, ctx, onComment, onChompKeep);
       }
     };
-    exports2.string = string2;
+    exports2.string = string;
   }
 });
 
@@ -2474,14 +2474,14 @@ var require_schema = __commonJS({
     var map = require_map();
     var _null = require_null();
     var seq = require_seq();
-    var string2 = require_string();
+    var string = require_string();
     var bool = require_bool();
     var float = require_float();
     var int = require_int();
     var schema = [
       map.map,
       seq.seq,
-      string2.string,
+      string.string,
       _null.nullTag,
       bool.boolTag,
       int.intOct,
@@ -3089,7 +3089,7 @@ var require_timestamp = __commonJS({
       resolve: (str) => parseSexagesimal(str, false),
       stringify: stringifySexagesimal
     };
-    var timestamp = {
+    var timestamp2 = {
       identify: (value) => value instanceof Date,
       default: true,
       tag: "tag:yaml.org,2002:timestamp",
@@ -3098,7 +3098,7 @@ var require_timestamp = __commonJS({
       // assumed to be 00:00:00Z (start of day, UTC).
       test: RegExp("^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})(?:(?:t|T|[ \\t]+)([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}(\\.[0-9]+)?)(?:[ \\t]*(Z|[-+][012]?[0-9](?::[0-9]{2})?))?)?$"),
       resolve(str) {
-        const match = str.match(timestamp.test);
+        const match = str.match(timestamp2.test);
         if (!match)
           throw new Error("!!timestamp expects a date, starting with yyyy-mm-dd");
         const [, year, month, day, hour, minute, second] = match.map(Number);
@@ -3117,7 +3117,7 @@ var require_timestamp = __commonJS({
     };
     exports2.floatTime = floatTime;
     exports2.intTime = intTime;
-    exports2.timestamp = timestamp;
+    exports2.timestamp = timestamp2;
   }
 });
 
@@ -3128,7 +3128,7 @@ var require_schema3 = __commonJS({
     var map = require_map();
     var _null = require_null();
     var seq = require_seq();
-    var string2 = require_string();
+    var string = require_string();
     var binary = require_binary();
     var bool = require_bool2();
     var float = require_float2();
@@ -3137,11 +3137,11 @@ var require_schema3 = __commonJS({
     var omap = require_omap();
     var pairs = require_pairs();
     var set = require_set();
-    var timestamp = require_timestamp();
+    var timestamp2 = require_timestamp();
     var schema = [
       map.map,
       seq.seq,
-      string2.string,
+      string.string,
       _null.nullTag,
       bool.trueTag,
       bool.falseTag,
@@ -3157,9 +3157,9 @@ var require_schema3 = __commonJS({
       omap.omap,
       pairs.pairs,
       set.set,
-      timestamp.intTime,
-      timestamp.floatTime,
-      timestamp.timestamp
+      timestamp2.intTime,
+      timestamp2.floatTime,
+      timestamp2.timestamp
     ];
     exports2.schema = schema;
   }
@@ -3172,7 +3172,7 @@ var require_tags = __commonJS({
     var map = require_map();
     var _null = require_null();
     var seq = require_seq();
-    var string2 = require_string();
+    var string = require_string();
     var bool = require_bool();
     var float = require_float();
     var int = require_int();
@@ -3184,10 +3184,10 @@ var require_tags = __commonJS({
     var pairs = require_pairs();
     var schema$2 = require_schema3();
     var set = require_set();
-    var timestamp = require_timestamp();
+    var timestamp2 = require_timestamp();
     var schemas = /* @__PURE__ */ new Map([
       ["core", schema.schema],
-      ["failsafe", [map.map, seq.seq, string2.string]],
+      ["failsafe", [map.map, seq.seq, string.string]],
       ["json", schema$1.schema],
       ["yaml11", schema$2.schema],
       ["yaml-1.1", schema$2.schema]
@@ -3198,11 +3198,11 @@ var require_tags = __commonJS({
       float: float.float,
       floatExp: float.floatExp,
       floatNaN: float.floatNaN,
-      floatTime: timestamp.floatTime,
+      floatTime: timestamp2.floatTime,
       int: int.int,
       intHex: int.intHex,
       intOct: int.intOct,
-      intTime: timestamp.intTime,
+      intTime: timestamp2.intTime,
       map: map.map,
       merge: merge.merge,
       null: _null.nullTag,
@@ -3210,7 +3210,7 @@ var require_tags = __commonJS({
       pairs: pairs.pairs,
       seq: seq.seq,
       set: set.set,
-      timestamp: timestamp.timestamp
+      timestamp: timestamp2.timestamp
     };
     var coreKnownTags = {
       "tag:yaml.org,2002:binary": binary.binary,
@@ -3218,7 +3218,7 @@ var require_tags = __commonJS({
       "tag:yaml.org,2002:omap": omap.omap,
       "tag:yaml.org,2002:pairs": pairs.pairs,
       "tag:yaml.org,2002:set": set.set,
-      "tag:yaml.org,2002:timestamp": timestamp.timestamp
+      "tag:yaml.org,2002:timestamp": timestamp2.timestamp
     };
     function getTags(customTags, schemaName, addMergeTag) {
       const schemaTags = schemas.get(schemaName);
@@ -3266,7 +3266,7 @@ var require_Schema = __commonJS({
     var identity = require_identity();
     var map = require_map();
     var seq = require_seq();
-    var string2 = require_string();
+    var string = require_string();
     var tags = require_tags();
     var sortMapEntriesByKey = (a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
     var Schema = class _Schema {
@@ -3277,7 +3277,7 @@ var require_Schema = __commonJS({
         this.tags = tags.getTags(customTags, this.name, merge);
         this.toStringOptions = toStringDefaults ?? null;
         Object.defineProperty(this, identity.MAP, { value: map.map });
-        Object.defineProperty(this, identity.SCALAR, { value: string2.string });
+        Object.defineProperty(this, identity.SCALAR, { value: string.string });
         Object.defineProperty(this, identity.SEQ, { value: seq.seq });
         this.sortMapEntries = typeof sortMapEntries === "function" ? sortMapEntries : sortMapEntries === true ? sortMapEntriesByKey : null;
       }
@@ -7196,7 +7196,7 @@ var require_public_api = __commonJS({
         return docs;
       return Object.assign([], { empty: true }, composer$1.streamInfo());
     }
-    function parseDocument3(source, options = {}) {
+    function parseDocument4(source, options = {}) {
       const { lineCounter: lineCounter2, prettyErrors } = parseOptions(options);
       const parser$1 = new parser.Parser(lineCounter2?.addNewLine);
       const composer$1 = new composer.Composer(options);
@@ -7222,7 +7222,7 @@ var require_public_api = __commonJS({
       } else if (options === void 0 && reviver && typeof reviver === "object") {
         options = reviver;
       }
-      const doc = parseDocument3(src, options);
+      const doc = parseDocument4(src, options);
       if (!doc)
         return null;
       doc.warnings.forEach((warning) => log.warn(doc.options.logLevel, warning));
@@ -7258,7 +7258,7 @@ var require_public_api = __commonJS({
     }
     exports2.parse = parse;
     exports2.parseAllDocuments = parseAllDocuments;
-    exports2.parseDocument = parseDocument3;
+    exports2.parseDocument = parseDocument4;
     exports2.stringify = stringify;
   }
 });
@@ -7316,11 +7316,16 @@ var require_dist = __commonJS({
 });
 
 // src/cli.ts
-var import_node_fs2 = require("node:fs");
+var import_node_fs5 = require("node:fs");
+var import_node_path6 = require("node:path");
+
+// src/runner.ts
+var import_node_fs4 = require("node:fs");
+
+// src/evidence.ts
 var import_node_path2 = require("node:path");
 
 // src/safe.ts
-var import_node_crypto = require("node:crypto");
 var import_node_fs = require("node:fs");
 var import_node_path = require("node:path");
 var LIMITS = Object.freeze({
@@ -7329,7 +7334,10 @@ var LIMITS = Object.freeze({
   jsonlLineBytes: 256 * 1024,
   traceEvents: 5e4,
   pathLength: 4096,
-  jsonDepth: 20
+  jsonDepth: 32,
+  receiptBytes: 1024 * 1024,
+  receiptTotalBytes: 8 * 1024 * 1024,
+  receipts: 64
 });
 var AegInputError = class extends Error {
   constructor(code, message) {
@@ -7356,8 +7364,8 @@ function assertSafeRepoPath(value, code = "AEG010") {
   if (typeof value !== "string" || value.length === 0 || value.length > LIMITS.pathLength) {
     throw new AegInputError(code, "repository path is missing or outside the configured limit");
   }
-  const normalized = value.replaceAll("\\", "/");
-  if (normalized.startsWith("/") || /^[A-Za-z]:\//.test(normalized) || normalized.split("/").includes("..")) {
+  const normalized2 = value.replaceAll("\\", "/");
+  if (normalized2.startsWith("/") || /^[A-Za-z]:\//.test(normalized2) || normalized2.split("/").includes("..")) {
     throw new AegInputError(code, "repository path is not relative and normalized");
   }
 }
@@ -7371,9 +7379,6 @@ function canonicalize(value) {
 function canonicalJson(value) {
   return `${JSON.stringify(canonicalize(value))}
 `;
-}
-function sha256(value) {
-  return (0, import_node_crypto.createHash)("sha256").update(value, "utf8").digest("hex");
 }
 var FORBIDDEN_KEYS = /* @__PURE__ */ new Set(["prompt", "source", "raw_output", "stdout", "stderr", "environment", "env", "credential", "credentials", "secret", "token", "password"]);
 var PRIVACY_SENTINEL = "AEG_PRIVATE_SENTINEL";
@@ -7396,77 +7401,129 @@ function assertNoForbiddenFields(value) {
   visit(value);
 }
 
-// src/adapters.ts
-function record(value, code = "AEG001") {
-  if (value === null || typeof value !== "object" || Array.isArray(value)) throw new AegInputError(code, "structured evidence must be an object");
-  return value;
+// src/evidence.ts
+function canonicalPath(value) {
+  return (0, import_node_path2.resolve)(value).replaceAll("\\", "/");
 }
-function string(value, code = "AEG001") {
-  if (typeof value !== "string" || value.length === 0) throw new AegInputError(code, "required evidence string is missing");
-  return value;
+function commandMatches(expected, actual) {
+  if (expected.kind !== actual.kind) return false;
+  if (expected.kind === "shell") return actual.script === expected.script && (expected.shell === void 0 || actual.shell === expected.shell);
+  return actual.executable === expected.executable && Array.isArray(actual.argv) && actual.argv.length === expected.argv.length && actual.argv.every((item, index) => item === expected.argv[index]);
 }
-function adaptEvidence(value) {
-  assertJsonDepth(value);
-  const input = record(value);
-  const source = record(input.source);
-  const subject = record(input.subject);
-  const check = record(input.check);
-  const producer = record(input.producer);
-  const trust = input.trust_context === void 0 ? {} : record(input.trust_context);
-  const kind = source.kind;
-  if (kind !== "omk_v3" && kind !== "maintainer_ci") throw new AegInputError("AEG001", "unsupported evidence adapter");
-  const exit = check.exit_code;
-  if (exit !== null && typeof exit !== "number") throw new AegInputError("AEG001", "check exit_code must be a number or null");
-  return {
-    source_kind: kind,
-    subject: { repository_id: string(subject.repository_id), head_sha: string(subject.head_sha) },
-    check: { check_id: string(check.check_id), termination: string(check.termination), exit_code: exit },
-    producer: { id: string(producer.id), run_id: string(producer.run_id), ...typeof producer.workflow_ref === "string" ? { workflow_ref: producer.workflow_ref } : {}, ...typeof producer.artifact_digest === "string" ? { artifact_digest: producer.artifact_digest } : {}, ...typeof producer.observed_at === "string" ? { observed_at: producer.observed_at } : {} },
-    trust: { ...typeof trust.repository_id === "string" ? { repository_id: trust.repository_id } : {}, ...typeof trust.current_head_sha === "string" ? { current_head_sha: trust.current_head_sha } : {}, ...Array.isArray(trust.trusted_workflows) && trust.trusted_workflows.every((x) => typeof x === "string") ? { trusted_workflows: trust.trusted_workflows } : {}, ...typeof trust.workflow_ref === "string" ? { workflow_ref: trust.workflow_ref } : {}, ...typeof trust.state_fingerprint === "string" ? { state_fingerprint: trust.state_fingerprint } : {}, ...typeof trust.policy_digest === "string" ? { policy_digest: trust.policy_digest } : {}, ...typeof trust.verifier_surface_changed === "boolean" ? { verifier_surface_changed: trust.verifier_surface_changed } : {} },
-    ...typeof input.claimed_assurance === "string" ? { claimed_assurance: input.claimed_assurance } : {}
-  };
-}
-function loadEvidence(filePath) {
-  const text = readBoundedFile(filePath, 1024 * 1024, "AEG003");
-  try {
-    return adaptEvidence(JSON.parse(text));
-  } catch (error) {
-    if (error instanceof AegInputError) throw error;
-    throw new AegInputError("AEG001", "evidence JSON is malformed");
+function selectGoal(manifest, receipts) {
+  const goals = [...new Set(receipts.map((receipt) => receipt.core.goalId))];
+  if (manifest.omk_goal_id !== void 0) {
+    if (!goals.includes(manifest.omk_goal_id)) throw new AegInputError("AEG020", "selected receipt goal is unavailable");
+    return manifest.omk_goal_id;
   }
+  if (goals.length !== 1) throw new AegInputError("AEG020", "receipt goals are ambiguous");
+  return goals[0];
 }
-function computeAssurance(evidence) {
-  const trusted = evidence.trust.repository_id === evidence.subject.repository_id && evidence.trust.current_head_sha === evidence.subject.head_sha && typeof evidence.trust.workflow_ref === "string" && evidence.trust.trusted_workflows?.includes(evidence.trust.workflow_ref) === true;
-  return trusted ? "E2-candidate" : "E1";
+function collectNativeEvidence(manifest, trace, receipts, repositoryRoot) {
+  if (receipts.length === 0) throw new AegInputError("AEG020", "no receipts were supplied");
+  const ids = /* @__PURE__ */ new Set();
+  for (const receipt of receipts) {
+    if (ids.has(receipt.core.receiptId)) throw new AegInputError("AEG020", "receipt identities are ambiguous");
+    ids.add(receipt.core.receiptId);
+  }
+  const goal = selectGoal(manifest, receipts);
+  if (trace.length === 0 || trace[0]?.run_id !== goal || trace.some((event) => event.run_id !== goal)) throw new AegInputError("AEG002", "trace does not bind to selected goal");
+  const root = canonicalPath(repositoryRoot);
+  const selected = [];
+  for (const check of manifest.required_checks) {
+    const expectedCwd = canonicalPath((0, import_node_path2.resolve)(root, check.cwd ?? "."));
+    const matches2 = receipts.filter((receipt) => receipt.core.goalId === goal && commandMatches(check.command, receipt.core.command) && canonicalPath(receipt.core.cwd) === expectedCwd).sort((left, right) => left.core.finishedAt.localeCompare(right.core.finishedAt));
+    const latest = matches2.at(-1);
+    if (latest === void 0 || matches2.length > 1 && matches2.at(-2)?.core.finishedAt === latest.core.finishedAt) throw new AegInputError("AEG020", "required receipt check is missing or ambiguous");
+    if (latest.core.status !== "passed" || latest.core.exitCode !== 0) throw new AegInputError("AEG020", "latest required receipt did not pass");
+    selected.push({ check: check.id, receipt: latest });
+  }
+  return { assurance_level: "E1", goal_id: goal, receipt_ids: selected.map((item) => item.receipt.core.receiptId), check_ids: selected.map((item) => item.check), core_digests: selected.map((item) => item.receipt.envelope.coreSha256) };
 }
 
 // src/git.ts
 var import_node_child_process = require("node:child_process");
+var import_node_crypto = require("node:crypto");
+var import_node_fs2 = require("node:fs");
+var import_node_path3 = require("node:path");
+var GIT_ENV_BLOCKLIST = /* @__PURE__ */ new Set(["GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_CEILING_DIRECTORIES", "GIT_COMMON_DIR", "GIT_DIFF_OPTS", "GIT_DIR", "GIT_EXTERNAL_DIFF", "GIT_INDEX_FILE", "GIT_NAMESPACE", "GIT_OBJECT_DIRECTORY", "GIT_PREFIX", "GIT_WORK_TREE"]);
+var MAX_GIT_OUTPUT = 16 * 1024 * 1024;
+var SHA256 = /^[0-9a-f]{64}$/;
+function digest(value) {
+  return (0, import_node_crypto.createHash)("sha256").update(value).digest("hex");
+}
+function canonicalRoot(root) {
+  const resolved = (0, import_node_path3.resolve)(root);
+  const details = (0, import_node_fs2.lstatSync)(resolved);
+  if (details.isSymbolicLink() || !details.isDirectory()) throw new AegInputError("AEG010", "repository root is unsafe");
+  return (0, import_node_fs2.realpathSync)(resolved);
+}
+function cleanEnv() {
+  return Object.fromEntries(Object.entries(process.env).filter(([key]) => !GIT_ENV_BLOCKLIST.has(key)));
+}
 function git(root, args) {
-  const result = (0, import_node_child_process.spawnSync)("git", ["-C", root, ...args], { encoding: "utf8", shell: false, windowsHide: true });
-  if (result.status !== 0) throw new AegInputError("AEG003", "Git facts are unavailable for the verifier context");
+  const result = (0, import_node_child_process.spawnSync)("git", ["-C", root, ...args], { encoding: "buffer", shell: false, windowsHide: true, timeout: 3e4, maxBuffer: MAX_GIT_OUTPUT, env: cleanEnv() });
+  if (result.error || result.status !== 0 || result.stdout.length > MAX_GIT_OUTPUT || result.stderr.length > MAX_GIT_OUTPUT) throw new AegInputError("AEG003", "Git state capture is unavailable");
   return result.stdout;
 }
-function normalizeChangedPaths(paths) {
-  const output = paths.map((path) => path.replaceAll("\\", "/").normalize("NFC")).sort((a, b) => Buffer.compare(Buffer.from(a), Buffer.from(b)));
-  const folded = /* @__PURE__ */ new Set();
-  for (const path of output) {
-    assertSafeRepoPath(path, "AEG010");
-    const key = path.toLocaleLowerCase("en-US");
-    if (folded.has(key)) throw new AegInputError("AEG010", "changed paths have a cross-platform case collision");
-    folded.add(key);
+function normalized(path) {
+  assertSafeRepoPath(path, "AEG010");
+  return path.replaceAll("\\", "/").normalize("NFC");
+}
+function within(path, artifactPaths) {
+  return artifactPaths.some((entry) => path === entry || path.startsWith(`${entry}/`));
+}
+function readArtifact(root, artifactPath) {
+  const target = (0, import_node_path3.join)(root, artifactPath);
+  const relativePath = (0, import_node_path3.relative)(root, target).replaceAll("\\", "/");
+  if (relativePath === "" || relativePath.startsWith("../") || (0, import_node_path3.isAbsolute)(relativePath)) throw new AegInputError("AEG010", "artifact path escapes repository root");
+  try {
+    const details = (0, import_node_fs2.lstatSync)(target);
+    if (details.isSymbolicLink() || !details.isFile()) throw new AegInputError("AEG010", "artifact state is unsafe");
+    const bytes = (0, import_node_fs2.readFileSync)(target);
+    return { path: artifactPath, state: "file", sha256: digest(bytes), size: bytes.length };
+  } catch (error) {
+    if (error instanceof AegInputError) throw error;
+    return { path: artifactPath, state: "missing" };
   }
-  return output;
 }
-function compatibilityFingerprint(head, changedPaths) {
-  return sha256(canonicalJson({ algorithm: "aeg-git-facts/v1", changed_paths: normalizeChangedPaths(changedPaths), head }));
+function parseStatus(output, paths) {
+  const changed = /* @__PURE__ */ new Set();
+  for (const entry of output.toString("utf8").split("\0")) {
+    if (entry === "") continue;
+    if (entry.length < 4 || entry[2] !== " ") throw new AegInputError("AEG003", "Git status output is malformed");
+    const path = normalized(entry.slice(3));
+    if (!within(path, paths)) throw new AegInputError("AEG003", "current changes are outside the receipt scope");
+    changed.add(path);
+  }
+  return [...changed].sort((left, right) => Buffer.compare(Buffer.from(left), Buffer.from(right)));
 }
-function readGitFacts(root) {
-  const head = git(root, ["rev-parse", "HEAD"]).trim();
-  const changed = git(root, ["diff", "--name-only", "--no-ext-diff", "HEAD"]).split(/\r?\n/).filter(Boolean);
-  const untracked = git(root, ["ls-files", "--others", "--exclude-standard"]).split(/\r?\n/).filter(Boolean);
-  const changed_paths = normalizeChangedPaths([...changed, ...untracked]);
-  return { algorithm: "aeg-git-facts/v1", head, changed_paths, dirty: changed_paths.length > 0, fingerprint: compatibilityFingerprint(head, changed_paths) };
+function equal(left, right) {
+  return SHA256.test(left) && SHA256.test(right) && (0, import_node_crypto.timingSafeEqual)(Buffer.from(left, "hex"), Buffer.from(right, "hex"));
+}
+function captureWorkspaceFingerprint(repositoryRoot, inputScope) {
+  const root = canonicalRoot(repositoryRoot);
+  if (!(0, import_node_path3.isAbsolute)(inputScope.root) || canonicalRoot(inputScope.root) !== root) throw new AegInputError("AEG003", "receipt workspace root does not match repository");
+  const reportedRoot = git(root, ["rev-parse", "--show-toplevel"]).toString("utf8").trim();
+  if (canonicalRoot(reportedRoot) !== root) throw new AegInputError("AEG003", "repository is not a Git worktree root");
+  const artifactPaths = [...new Set(inputScope.artifactPaths.map(normalized))].sort((left, right) => Buffer.compare(Buffer.from(left), Buffer.from(right)));
+  if (artifactPaths.length !== inputScope.artifactPaths.length) throw new AegInputError("AEG003", "receipt scope has duplicate paths");
+  const headCommit = git(root, ["rev-parse", "--verify", "HEAD^{commit}"]).toString("utf8").trim();
+  if (!/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/.test(headCommit)) throw new AegInputError("AEG003", "Git HEAD is invalid");
+  const changedPaths = parseStatus(git(root, ["-c", "core.fsmonitor=false", "status", "--porcelain=v1", "-z", "--untracked-files=all", "--no-renames", "--ignore-submodules=none"]), artifactPaths);
+  const pathspecs = artifactPaths.map((path) => `:(literal)${path}`);
+  const diffArgs = ["--full-index", "--binary", "--no-color", "--no-ext-diff", "--no-textconv", "--no-renames", "--ignore-submodules=none", "--src-prefix=a/", "--dst-prefix=b/", "--", ...pathspecs];
+  const stagedDiffSha256 = digest(git(root, ["diff", "--cached", ...diffArgs]));
+  const unstagedDiffSha256 = digest(git(root, ["diff", ...diffArgs]));
+  const artifacts = artifactPaths.map((path) => readArtifact(root, path));
+  const canonicalArtifacts = artifacts.map((artifact2) => artifact2.state === "file" ? { path: artifact2.path, state: artifact2.state, sha256: artifact2.sha256, size: artifact2.size } : { path: artifact2.path, state: artifact2.state });
+  const dirtySha256 = digest(`omk:evidence:workspace-fingerprint:git-dirty:v1\0${JSON.stringify({ changedPaths, stagedDiffSha256, unstagedDiffSha256, artifacts: canonicalArtifacts })}`);
+  const scope = { root, artifactPaths };
+  const manifestSha256 = digest(`omk:evidence:workspace-fingerprint:v1\0${JSON.stringify({ kind: "git", scope: { root: scope.root, artifactPaths: scope.artifactPaths }, artifacts: canonicalArtifacts, git: { headCommit, changedPaths, stagedDiffSha256, unstagedDiffSha256, dirtySha256 } })}`);
+  return { kind: "git", scope, artifacts, git: { headCommit, changedPaths, stagedDiffSha256, unstagedDiffSha256, dirtySha256 }, manifestSha256 };
+}
+function assertWorkspaceMatches(receipt, current) {
+  if (!equal(receipt.manifestSha256, current.manifestSha256)) throw new AegInputError("AEG003", "receipt workspace state is stale");
 }
 
 // src/manifest.ts
@@ -7485,10 +7542,24 @@ function parseChecks(value) {
     const check = candidate;
     if (typeof check.id !== "string" || !/^[A-Za-z0-9._-]+$/.test(check.id) || ids.has(check.id)) throw new AegInputError("AEG001", "required check id must be unique and stable");
     ids.add(check.id);
-    if (check.argv !== void 0 && (!Array.isArray(check.argv) || !check.argv.every((part) => typeof part === "string"))) throw new AegInputError("AEG001", "check argv must be an array of strings");
+    const command = parseCommand(check.command);
     if (check.cwd !== void 0) assertSafeRepoPath(check.cwd, "AEG001");
-    return { id: check.id, ...typeof check.kind === "string" ? { kind: check.kind } : {}, ...Array.isArray(check.argv) ? { argv: check.argv } : {}, ...typeof check.cwd === "string" ? { cwd: check.cwd } : {}, ...typeof check.success_exit_code === "number" ? { success_exit_code: check.success_exit_code } : {} };
+    return { id: check.id, command, ...typeof check.cwd === "string" ? { cwd: check.cwd } : {} };
   });
+}
+function parseCommand(value) {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) throw new AegInputError("AEG001", "required check command must be an object");
+  const command = value;
+  if (command.kind === "shell") {
+    if (typeof command.script !== "string" || command.script.length === 0 || command.shell !== void 0 && typeof command.shell !== "string") throw new AegInputError("AEG001", "shell command must provide a non-empty script and optional shell");
+    if (Object.keys(command).some((key) => !["kind", "script", "shell"].includes(key))) throw new AegInputError("AEG001", "shell command contains unsupported fields");
+    return { kind: "shell", script: command.script, ...typeof command.shell === "string" ? { shell: command.shell } : {} };
+  }
+  if (command.kind === "argv") {
+    if (typeof command.executable !== "string" || command.executable.length === 0 || !Array.isArray(command.argv) || !command.argv.every((part) => typeof part === "string") || Object.keys(command).some((key) => !["kind", "executable", "argv"].includes(key))) throw new AegInputError("AEG001", "argv command must provide an executable and string argv");
+    return { kind: "argv", executable: command.executable, argv: [...command.argv] };
+  }
+  throw new AegInputError("AEG001", "required check command kind is unsupported");
 }
 function parseBudget(value) {
   if (value === void 0) return void 0;
@@ -7546,14 +7617,15 @@ function parseManifestText(text) {
   assertJsonDepth(input);
   if (input === null || typeof input !== "object" || Array.isArray(input)) throw new AegInputError("AEG001", "manifest must be an object");
   const value = input;
-  if (value.schema_version !== "aeg-task/v1" || typeof value.task_id !== "string" || value.task_id.length === 0) throw new AegInputError("AEG001", "manifest schema_version and task_id are required");
+  if (value.schema_version !== "aeg-task/v2" || typeof value.task_id !== "string" || value.task_id.length === 0) throw new AegInputError("AEG001", "manifest schema_version and task_id are required");
   if (!profiles.has(value.profile)) throw new AegInputError("AEG001", "manifest profile must be local, pr, or protected");
   const dependencyPolicy = parseDependencyPolicy(value.dependency_policy);
   const budget = parseBudget(value.budget);
   const claims = parseClaims(value.claims);
   return {
-    schema_version: "aeg-task/v1",
+    schema_version: "aeg-task/v2",
     task_id: value.task_id,
+    ...typeof value.omk_goal_id === "string" ? { omk_goal_id: value.omk_goal_id } : {},
     ...typeof value.objective === "string" ? { objective: value.objective } : {},
     ...typeof value.base_commit === "string" ? { base_commit: value.base_commit } : {},
     profile: value.profile,
@@ -7573,12 +7645,225 @@ function loadManifest(filePath) {
   return parseManifestText(readBoundedFile(filePath, LIMITS.manifestBytes, "AEG003"));
 }
 
+// src/omk-receipt.ts
+var import_node_crypto2 = require("node:crypto");
+var import_node_path4 = require("node:path");
+var import_yaml2 = __toESM(require_dist(), 1);
+var SHA2562 = /^[0-9a-f]{64}$/;
+var RECEIPT_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
+var ISO_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+var CORE_DOMAIN = "omk:evidence:receipt-v3:core\0";
+var CREDENTIAL_PATTERN = /(?:--(?:token|password|secret|api[-_]?key)(?:=|\s)|https?:\/\/[^/\s]+:[^@\s]+@|(?:^|\s)(?:TOKEN|PASSWORD|SECRET|API_KEY)=)/i;
+var GIT_COMMIT = /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/;
+var REDACTION_TYPES = /* @__PURE__ */ new Set(["api-key-header", "authorization-header", "basic-auth", "bearer-token", "cli-option-inline", "cli-option-value", "cookie-header", "env-assignment", "known-token", "url-credential", "url-query"]);
+function object(value, required, optional = []) {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) throw new AegInputError("AEG001", "receipt structure is invalid");
+  const result = value;
+  const allowed = /* @__PURE__ */ new Set([...required, ...optional]);
+  if (Object.keys(result).some((key) => !allowed.has(key)) || required.some((key) => !(key in result))) throw new AegInputError("AEG001", "receipt structure is invalid");
+  return result;
+}
+function nonEmpty(value) {
+  if (typeof value !== "string" || value.length === 0 || value.includes("\0")) throw new AegInputError("AEG001", "receipt structure is invalid");
+  return value;
+}
+function digest2(value) {
+  if (typeof value !== "string" || !SHA2562.test(value)) throw new AegInputError("AEG001", "receipt digest is invalid");
+  return value;
+}
+function timestamp(value) {
+  const result = nonEmpty(value);
+  if (!ISO_TIME.test(result) || Number.isNaN(Date.parse(result))) throw new AegInputError("AEG001", "receipt timestamp is invalid");
+  return result;
+}
+function integer(value, positive = false) {
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || (positive ? value <= 0 : value < 0)) throw new AegInputError("AEG001", "receipt numeric field is invalid");
+  return value;
+}
+function sha256(value) {
+  return (0, import_node_crypto2.createHash)("sha256").update(value, "utf8").digest("hex");
+}
+function normalizedPath(value) {
+  if (typeof value !== "string" || value.length === 0 || value.includes("\0") || value.includes("\\") || (0, import_node_path4.isAbsolute)(value) || import_node_path4.win32.isAbsolute(value) || value === "." || import_node_path4.posix.normalize(value) !== value || value.split("/").some((part) => part === "" || part === "." || part === "..")) throw new AegInputError("AEG001", "workspace path is invalid");
+  return value;
+}
+function sortedPaths(value) {
+  if (!Array.isArray(value) || !value.every((item) => typeof item === "string")) throw new AegInputError("AEG001", "workspace paths are invalid");
+  const paths = value.map(normalizedPath);
+  for (let index = 1; index < paths.length; index++) if (paths[index - 1] >= paths[index]) throw new AegInputError("AEG001", "workspace paths are not sorted and unique");
+  return paths;
+}
+function artifact(value) {
+  const candidate = object(value, ["path", "state"], ["sha256", "size"]);
+  normalizedPath(candidate.path);
+  if (candidate.state === "missing") {
+    if (Object.keys(candidate).some((key) => !["path", "state"].includes(key))) throw new AegInputError("AEG001", "workspace artifact is invalid");
+    return { path: candidate.path, state: "missing" };
+  }
+  if (candidate.state !== "file" || Object.keys(candidate).length !== 4) throw new AegInputError("AEG001", "workspace artifact is invalid");
+  digest2(candidate.sha256);
+  integer(candidate.size);
+  return { path: candidate.path, state: "file", sha256: candidate.sha256, size: candidate.size };
+}
+function artifactCanonical(value) {
+  return value.state === "file" ? { path: value.path, state: value.state, sha256: value.sha256, size: value.size } : { path: value.path, state: value.state };
+}
+function validateWorkspace(value) {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) throw new AegInputError("AEG001", "workspace fingerprint is invalid");
+  const candidate = value;
+  const kind = candidate.kind;
+  if (kind !== "artifact-set" && kind !== "git") throw new AegInputError("AEG001", "workspace fingerprint kind is invalid");
+  const required = kind === "git" ? ["kind", "scope", "artifacts", "git", "manifestSha256"] : ["kind", "scope", "artifacts", "manifestSha256"];
+  const workspace = object(value, required);
+  const scope = object(workspace.scope, ["root", "artifactPaths"]);
+  if (typeof scope.root !== "string" || scope.root.length === 0 || !(0, import_node_path4.isAbsolute)(scope.root)) throw new AegInputError("AEG001", "workspace root is invalid");
+  const scopePaths = sortedPaths(scope.artifactPaths);
+  if (!Array.isArray(workspace.artifacts)) throw new AegInputError("AEG001", "workspace artifacts are invalid");
+  const artifacts = workspace.artifacts.map(artifact);
+  const artifactPaths = artifacts.map((item) => String(item.path));
+  if (artifactPaths.length !== scopePaths.length || artifactPaths.some((path, index) => path !== scopePaths[index])) throw new AegInputError("AEG001", "workspace artifacts do not match scope");
+  digest2(workspace.manifestSha256);
+  if (kind === "artifact-set") {
+    const expected = sha256(`omk:evidence:workspace-fingerprint:v1\0${JSON.stringify({ kind: "artifact-set", scope: { root: scope.root, artifactPaths: scopePaths }, artifacts: artifacts.map(artifactCanonical) })}`);
+    if (expected !== workspace.manifestSha256) throw new AegInputError("AEG001", "workspace manifest digest does not match");
+    return workspace;
+  }
+  const git2 = object(workspace.git, ["headCommit", "changedPaths", "stagedDiffSha256", "unstagedDiffSha256", "dirtySha256"]);
+  if (git2.headCommit !== null && (typeof git2.headCommit !== "string" || !GIT_COMMIT.test(git2.headCommit))) throw new AegInputError("AEG001", "workspace Git HEAD is invalid");
+  const changedPaths = sortedPaths(git2.changedPaths);
+  for (const path of changedPaths) if (!scopePaths.some((entry) => path === entry || path.startsWith(`${entry}/`))) throw new AegInputError("AEG001", "workspace changed path escapes scope");
+  digest2(git2.stagedDiffSha256);
+  digest2(git2.unstagedDiffSha256);
+  digest2(git2.dirtySha256);
+  const expectedDirty = sha256(`omk:evidence:workspace-fingerprint:git-dirty:v1\0${JSON.stringify({ changedPaths, stagedDiffSha256: git2.stagedDiffSha256, unstagedDiffSha256: git2.unstagedDiffSha256, artifacts: artifacts.map(artifactCanonical) })}`);
+  if (expectedDirty !== git2.dirtySha256) throw new AegInputError("AEG001", "workspace dirty digest does not match");
+  const expectedManifest = sha256(`omk:evidence:workspace-fingerprint:v1\0${JSON.stringify({ kind: "git", scope: { root: scope.root, artifactPaths: scopePaths }, artifacts: artifacts.map(artifactCanonical), git: { headCommit: git2.headCommit, changedPaths, stagedDiffSha256: git2.stagedDiffSha256, unstagedDiffSha256: git2.unstagedDiffSha256, dirtySha256: git2.dirtySha256 } })}`);
+  if (expectedManifest !== workspace.manifestSha256) throw new AegInputError("AEG001", "workspace manifest digest does not match");
+  return workspace;
+}
+function validateRedaction(value) {
+  const redaction = object(value, ["policyId", "placeholders"]);
+  nonEmpty(redaction.policyId);
+  if (typeof redaction.policyId !== "string" || redaction.policyId.length > 256 || !Array.isArray(redaction.placeholders) || redaction.placeholders.length > 11) throw new AegInputError("AEG001", "command redaction metadata is invalid");
+  let previous = "";
+  let total = 0;
+  for (const item of redaction.placeholders) {
+    const placeholder = object(item, ["type", "count"]);
+    if (typeof placeholder.type !== "string" || !REDACTION_TYPES.has(placeholder.type) || placeholder.type <= previous) throw new AegInputError("AEG001", "command redaction metadata is invalid");
+    previous = placeholder.type;
+    total += integer(placeholder.count, true);
+  }
+  if (total > 256) throw new AegInputError("AEG001", "command redaction metadata is invalid");
+}
+function validateBinding(value) {
+  const binding = object(value, ["algorithm", "keyId", "nonce", "mac"]);
+  if (binding.algorithm !== "hmac-sha256" || typeof binding.keyId !== "string" || !/^[0-9a-f]{16}$/.test(binding.keyId) || typeof binding.nonce !== "string" || !/^[0-9a-f]{32}$/.test(binding.nonce)) throw new AegInputError("AEG001", "command binding is invalid");
+  digest2(binding.mac);
+}
+function canonical(value) {
+  if (value === null || typeof value === "boolean" || typeof value === "string") return JSON.stringify(value);
+  if (typeof value === "number") {
+    if (!Number.isFinite(value) || Object.is(value, -0)) throw new AegInputError("AEG001", "receipt canonical data is invalid");
+    return JSON.stringify(value);
+  }
+  if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+  if (typeof value !== "object") throw new AegInputError("AEG001", "receipt canonical data is invalid");
+  const record = value;
+  return `{${Object.keys(record).sort().map((key) => `${JSON.stringify(key)}:${canonical(record[key])}`).join(",")}}`;
+}
+function computeOmkCoreDigest(core) {
+  return (0, import_node_crypto2.createHash)("sha256").update(CORE_DOMAIN, "utf8").update(canonical(core), "utf8").digest("hex");
+}
+function validateCommand(value) {
+  const command = object(value, ["kind"], ["shell", "script", "executable", "argv"]);
+  if (command.kind === "shell") {
+    if (Object.keys(command).some((key) => !["kind", "shell", "script"].includes(key))) throw new AegInputError("AEG001", "receipt command is invalid");
+    nonEmpty(command.shell);
+    const script = nonEmpty(command.script);
+    if (CREDENTIAL_PATTERN.test(script)) throw new AegInputError("AEG001", "receipt command contains credential material");
+    return;
+  }
+  if (command.kind === "argv") {
+    if (Object.keys(command).some((key) => !["kind", "executable", "argv"].includes(key)) || !Array.isArray(command.argv)) throw new AegInputError("AEG001", "receipt command is invalid");
+    nonEmpty(command.executable);
+    command.argv.forEach((part) => {
+      const value2 = nonEmpty(part);
+      if (CREDENTIAL_PATTERN.test(value2)) throw new AegInputError("AEG001", "receipt command contains credential material");
+    });
+    return;
+  }
+  throw new AegInputError("AEG001", "receipt command is invalid");
+}
+function validateCore(value) {
+  const core = object(value, ["schemaVersion", "receiptId", "goalId", "claim", "command", "cwd", "timeoutMs", "startedAt", "finishedAt", "durationMs", "status", "exitCode", "workspaceBefore", "workspaceAfter", "output", "executor"], ["laneId", "toolCallId", "commandRedaction", "commandBinding"]);
+  if (core.schemaVersion !== 3 || !RECEIPT_ID.test(String(core.receiptId))) throw new AegInputError("AEG001", "receipt core is invalid");
+  nonEmpty(core.goalId);
+  nonEmpty(core.claim);
+  validateCommand(core.command);
+  nonEmpty(core.cwd);
+  if (core.timeoutMs !== null) integer(core.timeoutMs, true);
+  const startedAt = timestamp(core.startedAt);
+  const finishedAt = timestamp(core.finishedAt);
+  if (Date.parse(finishedAt) < Date.parse(startedAt) || integer(core.durationMs) !== Date.parse(finishedAt) - Date.parse(startedAt)) throw new AegInputError("AEG001", "receipt timing is invalid");
+  if (core.status === "passed" ? core.exitCode !== 0 : core.status === "failed" ? !Number.isSafeInteger(core.exitCode) || core.exitCode === 0 : core.status !== "timeout" && core.status !== "aborted" || core.exitCode !== null) throw new AegInputError("AEG001", "receipt disposition is invalid");
+  const output = object(core.output, ["redactionPolicyId", "stdout", "stderr"]);
+  nonEmpty(output.redactionPolicyId);
+  for (const item of [output.stdout, output.stderr]) {
+    const result = object(item, ["sha256", "byteCount"]);
+    digest2(result.sha256);
+    integer(result.byteCount);
+  }
+  const stdout = output.stdout;
+  const stderr = output.stderr;
+  if (stdout.byteCount + stderr.byteCount > 64 * 1024) throw new AegInputError("AEG001", "receipt output is invalid");
+  validateWorkspace(core.workspaceBefore);
+  validateWorkspace(core.workspaceAfter);
+  if (core.executor !== "bash-tool" && core.executor !== "ci-runner" && core.executor !== "mcp" && core.executor !== "internal") throw new AegInputError("AEG001", "receipt executor is invalid");
+  if (core.commandRedaction !== void 0) validateRedaction(core.commandRedaction);
+  if (core.commandBinding !== void 0) validateBinding(core.commandBinding);
+  if (core.commandBinding !== void 0 && core.commandRedaction === void 0) throw new AegInputError("AEG001", "command binding requires redaction metadata");
+  if (core.commandRedaction !== void 0 && Array.isArray(core.commandRedaction.placeholders) && core.commandRedaction.placeholders.length > 0 && core.commandBinding === void 0) throw new AegInputError("AEG001", "redaction metadata requires command binding");
+  return core;
+}
+function parseOmkReceipt(text) {
+  let value;
+  try {
+    const document = (0, import_yaml2.parseDocument)(text, { uniqueKeys: true, prettyErrors: false });
+    if (document.errors.length > 0) throw new Error();
+    JSON.parse(text);
+    value = document.toJS();
+  } catch {
+    throw new AegInputError("AEG001", "receipt JSON is malformed");
+  }
+  assertJsonDepth(value, 32);
+  const receipt = object(value, ["core", "envelope"]);
+  const core = validateCore(receipt.core);
+  const envelope = object(receipt.envelope, ["coreSha256"], ["ledgerBinding", "trustedAttestation"]);
+  if (envelope.ledgerBinding !== void 0) {
+    const ledger = object(envelope.ledgerBinding, ["seq", "eventHash"]);
+    integer(ledger.seq, true);
+    digest2(ledger.eventHash);
+  }
+  if (envelope.trustedAttestation !== void 0) {
+    const attestation = object(envelope.trustedAttestation, ["attesterId", "keyId", "algorithm", "signature", "issuedAt"]);
+    nonEmpty(attestation.attesterId);
+    nonEmpty(attestation.keyId);
+    if (attestation.algorithm !== "ed25519") throw new AegInputError("AEG001", "trusted attestation is invalid");
+    nonEmpty(attestation.signature);
+    timestamp(attestation.issuedAt);
+  }
+  const actual = digest2(envelope.coreSha256);
+  const expected = computeOmkCoreDigest(core);
+  if (!(0, import_node_crypto2.timingSafeEqual)(Buffer.from(actual, "hex"), Buffer.from(expected, "hex"))) throw new AegInputError("AEG001", "receipt digest does not match");
+  return { core, envelope };
+}
+
 // src/report.ts
-function requiredAssurance(profile) {
-  return profile === "local" ? "E1" : "E2-candidate";
+function requiredAssurance(_profile) {
+  return "E1";
 }
 function preflightFailure(profile, code) {
-  return { schema_version: "aeg-report/v1", policy_verdict: "fail", assurance_level: "E0", required_assurance: requiredAssurance(profile), gate_verdict: "fail", profile, reason_codes: [code], findings: [{ id: code, status: "fail", severity: "error", summary: "Evidence input was rejected before policy evaluation.", evidence_refs: [], remediation_code: "AEG-REMEDIATION-FIX-INPUT", remediation: "Correct the structured input and rerun verification.", limitations: ["Untrusted input content is intentionally not echoed."] }], limitations: ["No policy or assurance decision was made after input rejection."] };
+  return { schema_version: "aeg-report/v2", policy_verdict: "fail", assurance_level: "E0", required_assurance: requiredAssurance(profile), gate_verdict: "fail", profile, reason_codes: [code], findings: [{ id: code, status: "fail", severity: "error", summary: "Evidence input was rejected before policy evaluation.", evidence_refs: [], remediation_code: "AEG-REMEDIATION-FIX-INPUT", remediation: "Correct the structured input and rerun verification.", limitations: ["Untrusted input content is intentionally not echoed."] }], limitations: ["No policy or assurance decision was made after input rejection."] };
 }
 function renderMarkdown(report) {
   return ["# Agent Evidence Gate report", "", `- Gate verdict: \`${report.gate_verdict}\``, `- Policy verdict: \`${report.policy_verdict}\``, `- Assurance: \`${report.assurance_level}\` (required: \`${report.required_assurance}\`)`, `- Reason codes: ${report.reason_codes.map((code) => `\`${code}\``).join(", ") || "none"}`, "", "## Findings", "", ...report.findings.map((finding2) => `- \`${finding2.id}\` \u2014 ${finding2.summary} (${finding2.remediation_code})`), "", "## Limitations", "", ...report.limitations.map((limitation) => `- ${limitation}`), ""].join("\n");
@@ -7591,7 +7876,6 @@ function exitCode(report) {
 }
 
 // src/policy.ts
-var rank = { E0: 0, E1: 1, "E2-candidate": 2, E3: 3 };
 function finding(id, status, summary, remediation = "Correct the evidence and rerun verification.") {
   return { id, status, severity: status === "fail" ? "error" : status === "warn" || status === "approval_required" ? "warning" : "info", summary, evidence_refs: [], remediation_code: `AEG-REMEDIATION-${id}`, remediation, limitations: [] };
 }
@@ -7608,26 +7892,11 @@ function sumUsage(events, field) {
 function declaredDependencies(events) {
   return events.flatMap((event) => Array.isArray(event.data.dependencies) ? event.data.dependencies.filter((value) => typeof value === "string") : []);
 }
-function commandReceiptFindings(manifest, trace) {
-  const check = manifest.required_checks.find((item) => item.id === trace.data.check_id);
-  if (!check) return false;
-  const argv = trace.data.argv;
-  const cwd = trace.data.cwd;
-  return Array.isArray(argv) && JSON.stringify(argv) === JSON.stringify(check.argv ?? []) && cwd === (check.cwd ?? ".") && trace.data.termination === "completed" && trace.data.exit_code === (check.success_exit_code ?? 0);
-}
-function evaluate(manifest, trace, evidence, gitFacts) {
+function evaluate(manifest, trace, evidence) {
   const findings = [];
-  const assurance = computeAssurance(evidence);
+  const assurance = evidence.assurance_level;
   const required = requiredAssurance(manifest.profile);
-  if (evidence.subject.repository_id !== evidence.trust.repository_id || evidence.subject.head_sha !== evidence.trust.current_head_sha) findings.push(finding("AEG003", "fail", "Evidence subject does not match the current verifier context."));
-  if (gitFacts && (evidence.subject.head_sha !== gitFacts.head || evidence.trust.state_fingerprint !== gitFacts.fingerprint)) findings.push(finding("AEG003", "fail", "Evidence state binding is incompatible with current Git facts."));
-  if (rank[assurance] < rank[required]) findings.push(finding("AEG070", "fail", "Evidence assurance is below the profile requirement."));
-  else if (assurance === "E1" && manifest.profile === "local") findings.push(finding("AEG070", "warn", "Local verification is self-reported and does not establish external assurance."));
-  const check = manifest.required_checks.find((candidate) => candidate.id === evidence.check.check_id);
-  if (!check) findings.push(finding("AEG020", "fail", "Evidence names an unknown required check."));
-  if (evidence.check.termination !== "completed" || evidence.check.exit_code !== 0) findings.push(finding("AEG020", "fail", "Required check did not complete successfully."));
-  const commandEvents = trace.filter((event) => event.event_type === "command_finished");
-  if (commandEvents.length > 0 && !commandEvents.some((event) => commandReceiptFindings(manifest, event))) findings.push(finding("AEG020", "fail", "Trace command receipt does not match the declared required check."));
+  if (manifest.profile !== "local") findings.push(finding("AEG070", "fail", "Native OMK receipt assurance is supported only for local verification."));
   for (const event of trace.filter((item) => item.event_type === "test_result")) {
     const failed = typeof event.data.failed === "number" ? event.data.failed : 0;
     const cancelled = typeof event.data.cancelled === "number" ? event.data.cancelled : 0;
@@ -7656,10 +7925,6 @@ function evaluate(manifest, trace, evidence, gitFacts) {
   if (manifest.dependency_policy?.allowed && dependencies.some((name) => !manifest.dependency_policy?.allowed?.includes(name))) findings.push(finding("AEG040", "fail", "Trace declares a dependency outside the manifest allowlist."));
   const testSurface = manifest.test_surface;
   if (testSurface && eventPaths(trace, "file_written").some((path) => matches(path, testSurface))) findings.push(finding("AEG060", manifest.profile === "protected" ? "fail" : "warn", "Trace changes the declared test surface."));
-  if (evidence.trust.verifier_surface_changed) {
-    const approved = manifest.exceptions?.includes("surface-approved") === true;
-    findings.push(finding("AEG061", approved ? "warn" : manifest.profile === "protected" ? "fail" : "approval_required", approved ? "Verifier or protected workflow surface changed with an explicit approval." : "Verifier or protected workflow surface changed."));
-  }
   const finishedClaims = trace.find((event) => event.event_type === "run_finished")?.data.claims;
   if (manifest.claims && (!Array.isArray(finishedClaims) || manifest.claims.some((claim) => !finishedClaims.includes(claim.id)))) findings.push(finding("AEG021", "fail", "Structured C2 claims do not match the manifest claim IDs."));
   const finishedData = trace.find((event) => event.event_type === "run_finished")?.data;
@@ -7684,12 +7949,69 @@ function evaluate(manifest, trace, evidence, gitFacts) {
   const approvals = findings.filter((item) => item.status === "approval_required");
   const warnings = findings.filter((item) => item.status === "warn");
   const verdict = failures.length ? "fail" : approvals.length ? "approval_required" : warnings.length ? "warn" : "pass";
-  const traceableFindings = findings.map((item) => item.evidence_refs.length > 0 ? item : { ...item, evidence_refs: ["manifest", "trace", "evidence"] });
-  return { schema_version: "aeg-report/v1", policy_verdict: verdict, assurance_level: assurance, required_assurance: required, gate_verdict: verdict, profile: manifest.profile, reason_codes: traceableFindings.map((item) => item.id).sort(), findings: traceableFindings.sort((a, b) => a.id.localeCompare(b.id)), limitations: ["E2-candidate is not evidence of a production-proven independent CI identity."] };
+  const traceableFindings = findings.map((item) => item.evidence_refs.length > 0 ? item : { ...item, evidence_refs: ["manifest", "trace", "receipt"] });
+  return { schema_version: "aeg-report/v2", policy_verdict: verdict, assurance_level: assurance, required_assurance: required, gate_verdict: verdict, profile: manifest.profile, reason_codes: traceableFindings.map((item) => item.id).sort(), findings: traceableFindings.sort((a, b) => a.id.localeCompare(b.id)), limitations: ["E1 native OMK receipts do not establish independent CI, attestation, replay membership, freshness outside the selected workspace, or runner honesty."] };
+}
+
+// src/receipts.ts
+var import_node_fs3 = require("node:fs");
+var import_node_path5 = require("node:path");
+function regularFile(path) {
+  let details;
+  try {
+    details = (0, import_node_fs3.lstatSync)(path);
+  } catch {
+    throw new AegInputError("AEG003", "receipt input is unavailable");
+  }
+  if (details.isSymbolicLink() || !details.isFile()) throw new AegInputError("AEG010", "receipt input must be an ordinary file");
+  if (details.size > LIMITS.receiptBytes) throw new AegInputError("AEG003", "receipt input exceeds the configured size limit");
+  return details.size;
+}
+function safeReceiptId(id) {
+  return /^[A-Za-z0-9._-]+$/.test(id) && id !== "." && id !== "..";
+}
+function discoverReceiptPaths(inputPath) {
+  const root = (0, import_node_path5.resolve)(inputPath);
+  let input;
+  try {
+    input = (0, import_node_fs3.lstatSync)(root);
+  } catch {
+    throw new AegInputError("AEG003", "receipt input is unavailable");
+  }
+  if (input.isSymbolicLink()) throw new AegInputError("AEG010", "receipt input must not be a link");
+  if (input.isFile()) {
+    regularFile(root);
+    return [root];
+  }
+  if (!input.isDirectory()) throw new AegInputError("AEG003", "receipt input must be a file or store directory");
+  let entries;
+  try {
+    entries = (0, import_node_fs3.readdirSync)(root).sort((left, right) => Buffer.compare(Buffer.from(left), Buffer.from(right)));
+  } catch {
+    throw new AegInputError("AEG003", "receipt store cannot be enumerated");
+  }
+  if (entries.length > LIMITS.receipts) throw new AegInputError("AEG003", "receipt store exceeds the configured count limit");
+  let totalBytes = 0;
+  const receipts = [];
+  for (const id of entries) {
+    const directory = (0, import_node_path5.join)(root, id);
+    let details;
+    try {
+      details = (0, import_node_fs3.lstatSync)(directory);
+    } catch {
+      throw new AegInputError("AEG003", "receipt store entry is unavailable");
+    }
+    if (!safeReceiptId(id) || details.isSymbolicLink() || !details.isDirectory()) throw new AegInputError("AEG010", "receipt store structure is unsafe");
+    const receiptPath = (0, import_node_path5.join)(directory, "receipt.json");
+    totalBytes += regularFile(receiptPath);
+    if (totalBytes > LIMITS.receiptTotalBytes) throw new AegInputError("AEG003", "receipt store exceeds the configured size limit");
+    receipts.push(receiptPath);
+  }
+  return receipts;
 }
 
 // src/trace.ts
-var import_yaml2 = __toESM(require_dist(), 1);
+var import_yaml3 = __toESM(require_dist(), 1);
 var eventTypes = /* @__PURE__ */ new Set(["run_started", "file_read", "file_written", "command_finished", "test_result", "model_usage", "retry", "run_finished"]);
 function parseJsonLine(line) {
   try {
@@ -7697,7 +8019,7 @@ function parseJsonLine(line) {
   } catch {
     throw new AegInputError("AEG002", "trace line is not valid JSON");
   }
-  const document = (0, import_yaml2.parseDocument)(line, { uniqueKeys: true, prettyErrors: false });
+  const document = (0, import_yaml3.parseDocument)(line, { uniqueKeys: true, prettyErrors: false });
   if (document.errors.length > 0) throw new AegInputError("AEG002", "trace line contains duplicate keys");
   return document.toJS();
 }
@@ -7732,13 +8054,27 @@ function loadTrace(filePath) {
 }
 
 // src/runner.ts
+function workspaceAfter(receipt) {
+  const value = receipt.core.workspaceAfter;
+  if (value.kind !== "git" || value.scope === null || typeof value.scope !== "object" || Array.isArray(value.scope)) throw new AegInputError("AEG003", "selected receipt lacks a Git workspace fingerprint");
+  const scope = value.scope;
+  if (typeof scope.root !== "string" || !Array.isArray(scope.artifactPaths) || !scope.artifactPaths.every((path) => typeof path === "string")) throw new AegInputError("AEG003", "selected receipt workspace scope is invalid");
+  return value;
+}
 function verify(options) {
   if (!options.repoPath) throw new AegInputError("AEG003", "repository context is required for Git state binding");
   const manifest = loadManifest(options.manifestPath);
   const trace = loadTrace(options.tracePath);
-  const evidence = loadEvidence(options.evidencePath);
-  const gitFacts = readGitFacts(options.repoPath);
-  return evaluate({ ...manifest, ...options.profile ? { profile: options.profile } : {} }, trace, evidence, gitFacts);
+  const receipts = discoverReceiptPaths(options.receiptsPath).map((path) => parseOmkReceipt((0, import_node_fs4.readFileSync)(path, "utf8")));
+  const evidence = collectNativeEvidence(manifest, trace, receipts, options.repoPath);
+  for (const id of evidence.receipt_ids) {
+    const receipt = receipts.find((item) => item.core.receiptId === id);
+    if (receipt === void 0) throw new AegInputError("AEG020", "selected receipt is unavailable");
+    const expected = workspaceAfter(receipt);
+    const scope = expected.scope;
+    assertWorkspaceMatches(expected, captureWorkspaceFingerprint(options.repoPath, scope));
+  }
+  return evaluate(manifest, trace, evidence);
 }
 
 // src/cli.ts
@@ -7751,19 +8087,18 @@ function parseArguments(values) {
     if (!value) throw new Error("usage");
     if (key === "--manifest") output.manifest = value;
     else if (key === "--trace") output.trace = value;
-    else if (key === "--evidence") output.evidence = value;
+    else if (key === "--receipts") output.receipts = value;
     else if (key === "--repo") output.repo = value;
     else if (key === "--json") output.json = value;
     else if (key === "--markdown") output.markdown = value;
-    else if (key === "--profile" && (value === "local" || value === "pr" || value === "protected")) output.profile = value;
     else throw new Error("usage");
   }
   return output;
 }
 function write(path, content) {
   if (path) {
-    (0, import_node_fs2.mkdirSync)((0, import_node_path2.dirname)(path), { recursive: true });
-    (0, import_node_fs2.writeFileSync)(path, content, "utf8");
+    (0, import_node_fs5.mkdirSync)((0, import_node_path6.dirname)(path), { recursive: true });
+    (0, import_node_fs5.writeFileSync)(path, content, "utf8");
   }
 }
 function main() {
@@ -7774,10 +8109,10 @@ function main() {
     process.stderr.write("AEG usage error\n");
     return 64;
   }
-  let profile = args.profile ?? "pr";
+  let profile = "local";
   try {
-    if (!args.manifest || !args.trace || !args.evidence) throw new Error("missing input");
-    const report = verify({ manifestPath: args.manifest, tracePath: args.trace, evidencePath: args.evidence, ...args.repo ? { repoPath: args.repo } : {}, ...args.profile ? { profile: args.profile } : {} });
+    if (!args.manifest || !args.trace || !args.receipts) throw new Error("missing input");
+    const report = verify({ manifestPath: args.manifest, tracePath: args.trace, receiptsPath: args.receipts, ...args.repo ? { repoPath: args.repo } : {} });
     profile = report.profile;
     const json = renderJson(report);
     write(args.json, json);

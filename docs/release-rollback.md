@@ -5,8 +5,8 @@
 ## Local release checklist
 
 1. Run `pnpm install --frozen-lockfile --ignore-scripts`, `pnpm run build`, and `pnpm test` with the fixed Node bundle.
-2. Review `gate-report` JSON and Markdown determinism, Action static-security tests, and the F/I matrix.
-3. Review the threat model and confirm no real E2/market-acceptance claim is made.
+2. Review `gate-report` JSON and Markdown determinism, Node 24 Action static-security tests, native F/I matrix, Receipt negative cases and privacy sentinel checks.
+3. Review the threat model and confirm the report remains E1/local-only; no real E2/market-acceptance claim is made.
 4. Pin consumers to an immutable commit or reviewed tag; do not consume a moving branch.
 
 ## Rollback

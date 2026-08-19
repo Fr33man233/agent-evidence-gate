@@ -1,6 +1,6 @@
 import { parseDocument } from "yaml";
 import { AegInputError, assertJsonDepth, assertSafeRepoPath, LIMITS, readBoundedFile } from "./safe.js";
-import type { AgentTaskManifest, ProfileName, RequiredCheck } from "./types.js";
+import type { AgentTaskManifest, CommandDescriptor, ProfileName, RequiredCheck } from "./types.js";
 
 const profiles = new Set<ProfileName>(["local", "pr", "protected"]);
 
@@ -18,10 +18,25 @@ function parseChecks(value: unknown): RequiredCheck[] {
     const check = candidate as Record<string, unknown>;
     if (typeof check.id !== "string" || !/^[A-Za-z0-9._-]+$/.test(check.id) || ids.has(check.id)) throw new AegInputError("AEG001", "required check id must be unique and stable");
     ids.add(check.id);
-    if (check.argv !== undefined && (!Array.isArray(check.argv) || !check.argv.every((part) => typeof part === "string"))) throw new AegInputError("AEG001", "check argv must be an array of strings");
+    const command = parseCommand(check.command);
     if (check.cwd !== undefined) assertSafeRepoPath(check.cwd, "AEG001");
-    return { id: check.id, ...(typeof check.kind === "string" ? { kind: check.kind } : {}), ...(Array.isArray(check.argv) ? { argv: check.argv as string[] } : {}), ...(typeof check.cwd === "string" ? { cwd: check.cwd } : {}), ...(typeof check.success_exit_code === "number" ? { success_exit_code: check.success_exit_code } : {}) };
+    return { id: check.id, command, ...(typeof check.cwd === "string" ? { cwd: check.cwd } : {}) };
   });
+}
+
+function parseCommand(value: unknown): CommandDescriptor {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) throw new AegInputError("AEG001", "required check command must be an object");
+  const command = value as Record<string, unknown>;
+  if (command.kind === "shell") {
+    if (typeof command.script !== "string" || command.script.length === 0 || (command.shell !== undefined && typeof command.shell !== "string")) throw new AegInputError("AEG001", "shell command must provide a non-empty script and optional shell");
+    if (Object.keys(command).some((key) => !["kind", "script", "shell"].includes(key))) throw new AegInputError("AEG001", "shell command contains unsupported fields");
+    return { kind: "shell", script: command.script, ...(typeof command.shell === "string" ? { shell: command.shell } : {}) };
+  }
+  if (command.kind === "argv") {
+    if (typeof command.executable !== "string" || command.executable.length === 0 || !Array.isArray(command.argv) || !command.argv.every((part) => typeof part === "string") || Object.keys(command).some((key) => !["kind", "executable", "argv"].includes(key))) throw new AegInputError("AEG001", "argv command must provide an executable and string argv");
+    return { kind: "argv", executable: command.executable, argv: [...command.argv] };
+  }
+  throw new AegInputError("AEG001", "required check command kind is unsupported");
 }
 
 function parseBudget(value: unknown): AgentTaskManifest["budget"] {
@@ -69,14 +84,15 @@ export function parseManifestText(text: string): AgentTaskManifest {
   assertJsonDepth(input);
   if (input === null || typeof input !== "object" || Array.isArray(input)) throw new AegInputError("AEG001", "manifest must be an object");
   const value = input as Record<string, unknown>;
-  if (value.schema_version !== "aeg-task/v1" || typeof value.task_id !== "string" || value.task_id.length === 0) throw new AegInputError("AEG001", "manifest schema_version and task_id are required");
+  if (value.schema_version !== "aeg-task/v2" || typeof value.task_id !== "string" || value.task_id.length === 0) throw new AegInputError("AEG001", "manifest schema_version and task_id are required");
   if (!profiles.has(value.profile as ProfileName)) throw new AegInputError("AEG001", "manifest profile must be local, pr, or protected");
   const dependencyPolicy = parseDependencyPolicy(value.dependency_policy);
   const budget = parseBudget(value.budget);
   const claims = parseClaims(value.claims);
   return {
-    schema_version: "aeg-task/v1",
+    schema_version: "aeg-task/v2",
     task_id: value.task_id,
+    ...(typeof value.omk_goal_id === "string" ? { omk_goal_id: value.omk_goal_id } : {}),
     ...(typeof value.objective === "string" ? { objective: value.objective } : {}),
     ...(typeof value.base_commit === "string" ? { base_commit: value.base_commit } : {}),
     profile: value.profile as ProfileName,

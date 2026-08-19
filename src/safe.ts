@@ -8,7 +8,10 @@ export const LIMITS = Object.freeze({
   jsonlLineBytes: 256 * 1024,
   traceEvents: 50_000,
   pathLength: 4_096,
-  jsonDepth: 20,
+  jsonDepth: 32,
+  receiptBytes: 1024 * 1024,
+  receiptTotalBytes: 8 * 1024 * 1024,
+  receipts: 64,
 });
 
 export class AegInputError extends Error {

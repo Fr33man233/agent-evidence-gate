@@ -5,12 +5,24 @@ export type ProfileName = (typeof PROFILES)[number];
 export type Verdict = "pass" | "warn" | "fail" | "approval_required";
 export type Severity = "info" | "warning" | "error";
 
+export interface ShellCommand {
+  kind: "shell";
+  script: string;
+  shell?: string;
+}
+
+export interface ArgvCommand {
+  kind: "argv";
+  executable: string;
+  argv: string[];
+}
+
+export type CommandDescriptor = ShellCommand | ArgvCommand;
+
 export interface RequiredCheck {
   id: string;
-  kind?: string;
-  argv?: string[];
+  command: CommandDescriptor;
   cwd?: string;
-  success_exit_code?: number;
   scope?: string[];
 }
 
@@ -23,8 +35,9 @@ export interface Budget {
 }
 
 export interface AgentTaskManifest {
-  schema_version: "aeg-task/v1";
+  schema_version: "aeg-task/v2";
   task_id: string;
+  omk_goal_id?: string;
   objective?: string;
   base_commit?: string;
   profile: ProfileName;
@@ -63,7 +76,7 @@ export interface Finding {
 }
 
 export interface GateReport {
-  schema_version: "aeg-report/v1";
+  schema_version: "aeg-report/v2";
   policy_verdict: Verdict;
   assurance_level: AssuranceLevel;
   required_assurance: AssuranceLevel;
