@@ -35,7 +35,7 @@ node dist/aeg.cjs verify `
 
 ## Action
 
-隔离实现中的 Action 使用 Node 24，只读接收 `manifest`、`trace`、`receipts`、`repository`、`json` 和 `markdown`。v0.2.0 尚未发布，因此不能用公开 v0.1.3 tag 调用这些新输入；发布前必须固定 reviewed immutable commit，不得使用 untrusted local action 或 `pull_request_target`。
+隔离实现中的 Action 使用 Node 24，只读接收 `manifest`、`trace`、`receipts`、`repo`、`json` 和 `markdown`。v0.2.0 尚未发布，因此不能用公开 v0.1.3 tag 调用这些新输入；发布前必须固定 reviewed immutable commit，不得使用 untrusted local action 或 `pull_request_target`。
 
 ## 安全边界
 

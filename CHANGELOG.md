@@ -14,6 +14,7 @@
 - 当前隔离实现已迁移到 Node 24；公开 v0.1.3 tag 仍保持 Node 20，不受本轮修改。
 - 当前实现已通过本地 TypeScript、24 项测试、两次字节级一致 bundle 构建和三步 synthetic pilot；real maintainer CI/E2、第三方审计和发布仍未完成。
 - release-validation workflow 明确保持 v0.1.3 历史验证合同，不把未发布 v0.2 Action 与 v1 evidence 混用。
+- Action input 已与 v0.2 设计对齐为 `repo`，不保留 `repository` 兼容别名。
 
 设计依据见 [v0.2.0 原生 OMK Receipt v3 设计文档](docs/superpowers/specs/2026-08-19-native-omk-receipt-v3-design.md)。
 

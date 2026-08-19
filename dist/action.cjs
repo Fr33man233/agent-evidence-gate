@@ -8081,7 +8081,7 @@ function input(name) {
   return process.env[`INPUT_${name.toUpperCase()}`] ?? "";
 }
 function repository() {
-  return input("repository") || process.env.GITHUB_WORKSPACE || "";
+  return input("repo") || process.env.GITHUB_WORKSPACE || "";
 }
 function write(path, text) {
   (0, import_node_fs5.mkdirSync)((0, import_node_path6.dirname)(path), { recursive: true });

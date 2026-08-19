@@ -4,7 +4,7 @@ import { verify } from "./runner.js";
 import { renderJson, renderMarkdown, exitCode, preflightFailure } from "./report.js";
 
 function input(name: string): string { return process.env[`INPUT_${name.toUpperCase()}`] ?? ""; }
-function repository(): string { return input("repository") || process.env.GITHUB_WORKSPACE || ""; }
+function repository(): string { return input("repo") || process.env.GITHUB_WORKSPACE || ""; }
 function write(path: string, text: string): void { mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, text, "utf8"); }
 
 let code = 1;
