@@ -20,7 +20,7 @@ test("release validation workflow is manual, read-only, immutable, and synthetic
   assert.doesNotMatch(workflow, /uses:\s+[^./\s]+\/[^@\s]+@(v|main|master)/i);
 });
 
-test("Marketplace metadata and consumer example stay aligned with the release version", () => {
+test("Marketplace metadata and historical consumer example stay explicit during v0.2 pre-release", () => {
   const action = parse(readFileSync("action.yml", "utf8")) as {
     author?: string;
     branding?: { icon?: string; color?: string };
@@ -35,6 +35,9 @@ test("Marketplace metadata and consumer example stay aligned with the release ve
   assert.equal(action.author, "Freeman Huang");
   assert.deepEqual(action.branding, { icon: "shield", color: "green" });
   assert.match(workflow, /ref: v0\.1\.3/);
-  assert.match(readme, new RegExp(`uses: Fr33man233/agent-evidence-gate@${releaseTag.replaceAll(".", "\\.")}`));
+  assert.equal(releaseTag, "v0.2.0");
+  assert.match(readme, /历史 v0\.1\.3 consumer 示例/);
+  assert.match(readme, /uses: Fr33man233\/agent-evidence-gate@v0\.1\.3/);
+  assert.doesNotMatch(readme, /uses: Fr33man233\/agent-evidence-gate@v0\.2\.0/);
   assert.match(readme, /permissions:\s+contents:\s+read/);
 });

@@ -10,7 +10,7 @@
 
 **兼容目标：** `open-multi-agent-kit@0.96.0`
 
-**实现状态：** 尚未开始
+**实现状态：** 本设计提交时尚未开始；当前实现已完成本地候选与审计，公开发布仍未开始（见 [v0.2.0 release candidate record](../../releases/v0.2.0-release-candidate-record.md)）。
 
 ## 1. 决策摘要
 

@@ -30,7 +30,7 @@
 | v0.1.1 | `e53f68eb8ac12cd0cda9f5882cb93cfa1919bc83` | 已公开发布 | GitHub Release、Git diff、共享 release validation 文档 | 变更可追溯；没有独立成功 controlled run 记录 |
 | v0.1.2 | `979b1114e28b757ebda31aa5cceca3f2133e204c` | 已公开发布 | clean-checkout 记录、controlled run `32141322549`、security/privacy review | 发布与验证证据完整，但不构成第三方审计或 real E2 |
 | v0.1.3 | `d82c7863f48878bfee66e978e7569c464de48ea2` | 已公开发布 | Marketplace preflight、GitHub Release、controlled run `32211203587`、artifact | 发布后记录已在本次审计补齐；runtime 与 v0.1.2 相同 |
-| v0.2.0 | 分支 `codex/v0.2.0-omk-native`；设计提交 `1665635cf578a39d6bc71519fc0890946e63cf20` | 设计完成，未实现、未发布 | 原生 OMK Receipt v3 设计文档 | 当前阶段可追溯；不得写成已交付版本 |
+| v0.2.0 | 分支 `codex/v0.2.0-local-handoff`；设计提交 `1665635cf578a39d6bc71519fc0890946e63cf20` | 本地 RC，未发布 | 原生 OMK Receipt v3 设计、实施计划、本地安全审计、候选交接记录 | 本地门禁与 bundle 已验证；真实 maintainer CI/E2、第三方审计和外部试点未完成 |
 
 ## 3. 公开版本事实
 
@@ -80,11 +80,13 @@
 ## 4. 当前 v0.2.0 状态
 
 - 基线：公开 v0.1.3 commit `d82c7863f48878bfee66e978e7569c464de48ea2`
-- 隔离分支：`codex/v0.2.0-omk-native`
+- 隔离分支：`codex/v0.2.0-local-handoff`
 - 设计文档：[原生 OMK Receipt v3 设计](superpowers/specs/2026-08-19-native-omk-receipt-v3-design.md)
 - 当前决定：破坏性删除 v0.1 evidence envelope，直接消费原生 OMK Receipt v3，最高 E1，本地门禁优先
-- 实现状态：尚未开始
+- 实现状态：已完成本地实现与审计；31/31 测试、TypeScript、可复现 bundle 和链接检查通过
 - 发布状态：没有 v0.2.0 tag 或 Release
+- 发布门槛：真实 maintainer CI/E2、第三方安全审计和外部试点未验证；公开发布仍为 NO-GO
+- 候选记录：[v0.2.0 release candidate record](releases/v0.2.0-release-candidate-record.md)
 
 ## 5. 不可追溯项
 

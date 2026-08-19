@@ -48,6 +48,7 @@ AEG 不调用 LLM/API/network，不读取 secrets，不执行候选代码、shel
 - [Quickstart](docs/quickstart.md)
 - [Threat model](docs/threat-model.md)
 - [Release and rollback](docs/release-rollback.md)
+- [v0.2.0 release candidate record](docs/releases/v0.2.0-release-candidate-record.md)
 - [版本历史](docs/version-history.md)
 - [v0.1.3 发布记录](docs/releases/v0.1.3-release-record.md)
 
