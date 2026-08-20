@@ -9,7 +9,7 @@ test("v0.2 release metadata identifies an unpublished 0.2.0 candidate", () => {
   assert.equal(packageManifest.version, "0.2.0");
   assert.equal(packageManifest.dependencies?.yaml, "2.8.3");
   assert.match(changelog, /Unreleased — v0\.2\.0/);
-  assert.match(changelog, /31 项测试/);
+  assert.match(changelog, /32 项测试/);
   assert.match(history, /v0\.2\.0[\s\S]*本地 RC/);
   assert.doesNotMatch(history, /v0\.2\.0[\s\S]*实现状态：尚未开始/);
 });

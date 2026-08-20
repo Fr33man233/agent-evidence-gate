@@ -4,7 +4,7 @@ AEG 是一个确定性、隐私优先、只读的本地证据门禁。v0.2.0 直
 
 ## 当前状态
 
-v0.2.0 尚未发布。所有 Receipt 最高为 E1，只有 `local` profile 支持通过；`pr` 和 `protected` 不提供 E2 或独立 CI proof。公开 v0.1.3 tag、Release、Marketplace alias 和 main 保持不变。
+v0.2.0 尚未发布。所有 Receipt 最高为 E1，只有 `local` profile 支持通过；`pr` 和 `protected` 不提供 E2 或独立 CI proof。公开 v0.1.3 tag、Release 和 Marketplace alias 保持不变；main 仅增加了 workflow-only 的 v0.2 受控验证注册，不代表 v0.2 已发布。
 
 历史 v0.1.3 consumer 示例（仅用于解释已发布基线，不是 v0.2.0 的输入合同）：
 

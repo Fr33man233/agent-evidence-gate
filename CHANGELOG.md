@@ -12,7 +12,8 @@
 - 直接读取原生 OMK EvidenceReceipt v3。
 - 所有原生 OMK Receipt 最高限定为 E1；v0.2.0 只承诺可工作的本地门禁。
 - 当前隔离实现已迁移到 Node 24；公开 v0.1.3 tag 仍保持 Node 20，不受本轮修改。
-- 当前实现已通过本地 TypeScript、31 项测试、两次字节级一致 bundle 构建和三步 synthetic pilot；real maintainer CI/E2、第三方审计和外部试点仍未完成。
+- 当前实现已通过本地 TypeScript、32 项测试、两次字节级一致 bundle 构建和三步 synthetic pilot；maintainer-controlled workflow run `32343791125` 成功，报告为 `pass / E1 / local`，不构成 E2；第三方审计和外部试点仍未完成。
+- 默认 `main` 仅增加 workflow-only 注册提交 `f9e76861d997e6b841d53948c7e3a461fea16171`；v0.1.3 tag、Release 和 Marketplace alias 未改变。
 - release-validation workflow 明确保持 v0.1.3 历史验证合同，不把未发布 v0.2 Action 与 v1 evidence 混用。
 - Action input 已与 v0.2 设计对齐为 `repo`，不保留 `repository` 兼容别名。
 
