@@ -1,0 +1,38 @@
+name: v0.2 native validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-native-local:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - name: Prepare sanitized native Receipt fixture
+        env:
+          AEG_INPUT_DIR: ${{ runner.temp }}/aeg-v0.2-native
+          AEG_EXPECTED_SHA: ${{ github.sha }}
+        run: node scripts/prepare-v0.2-native-validation.mjs "$AEG_INPUT_DIR" "$GITHUB_WORKSPACE"
+      - name: Run local Node 24 Action against native Receipt
+        uses: ./
+        with:
+          manifest: ${{ runner.temp }}/aeg-v0.2-native/agent-task.yml
+          trace: ${{ runner.temp }}/aeg-v0.2-native/agent-trace.jsonl
+          receipts: ${{ runner.temp }}/aeg-v0.2-native/receipt.json
+          repo: ${{ github.workspace }}
+          json: gate-report.json
+          markdown: gate-report.md
+      - name: Upload v0.2 validation reports
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        with:
+          name: aeg-v0.2-native-validation-report
+          path: |
+            gate-report.json
+            gate-report.md

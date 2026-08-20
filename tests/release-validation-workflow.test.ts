@@ -41,3 +41,16 @@ test("Marketplace metadata and historical consumer example stay explicit during 
   assert.doesNotMatch(readme, /uses: Fr33man233\/agent-evidence-gate@v0\.2\.0/);
   assert.match(readme, /permissions:\s+contents:\s+read/);
 });
+
+test("v0.2 native validation workflow is manual, read-only, and runs only the local action", () => {
+  const workflow = readFileSync(".github/workflows/v0.2-native-validation.yml", "utf8");
+  assert.match(workflow, /workflow_dispatch/);
+  assert.match(workflow, /permissions:\s+contents:\s+read/);
+  assert.match(workflow, /actions\/checkout@[0-9a-f]{40}/);
+  assert.match(workflow, /actions\/upload-artifact@[0-9a-f]{40}/);
+  assert.match(workflow, /uses:\s+\.\//);
+  assert.match(workflow, /prepare-v0\.2-native-validation\.mjs/);
+  assert.match(workflow, /github\.sha/);
+  assert.doesNotMatch(workflow, /pull_request|pull_request_target|secrets\.|npm install|pnpm install|npm test|pnpm test/i);
+  assert.doesNotMatch(workflow, /uses:\s+[^./\s]+\/[^@\s]+@(v|main|master)/i);
+});
